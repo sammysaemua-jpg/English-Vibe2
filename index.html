@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Learning Vibe - AI Homework & Learning Portal</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Kanit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Kanit', 'sans-serif'],
+            display: ['Kanit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+            },
+            accent: {
+              500: '#8b5cf6',
+              600: '#7c3aed',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Inter', 'Kanit', sans-serif;
+      background-color: #f8fafc;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo & Branding -->
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-xl gradient-bg flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
+            <i class="fa-solid font-bold text-lg fa-graduation-cap"></i>
+          </div>
+          <div>
+            <h1 id="appHeaderTitle" class="font-display font-bold text-lg text-slate-900 leading-tight">English Learning Vibe</h1>
+            <p id="appHeaderSubtitle" class="text-xs text-slate-500 font-medium">Smart AI Learning & Grading Portal</p>
+          </div>
+        </div>
+
+        <!-- Role Switcher & Settings -->
+        <div class="flex items-center gap-3">
+          <!-- API Key Status Indicator -->
+          <button onclick="openApiKeyModal()" id="apiKeyBadge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition">
+            <i class="fa-solid fa-key text-amber-500"></i>
+            <span id="apiKeyStatusText">Demo API Mode</span>
+          </button>
+
+          <!-- Navigation Switcher (Student / Teacher View) -->
+          <div class="bg-slate-100 p-1 rounded-xl flex items-center border border-slate-200">
+            <button id="btnStudentRole" onclick="switchRole('student')" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm">
+              <i class="fa-solid fa-user-graduate"></i>
+              <span>Student</span>
+            </button>
+            <button id="btnTeacherRole" onclick="switchRole('teacher')" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
+              <i class="fa-solid fa-chalkboard-user"></i>
+              <span>Teacher</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+    <!-- ========================================== -->
+    <!-- STUDENT VIEW SECTION                       -->
+    <!-- ========================================== -->
+    <div id="studentView" class="space-y-8">
+      
+      <!-- Welcome Banner -->
+      <div class="gradient-bg rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-blue-500/10 relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black select-none">
+          <i class="fa-solid fa-language"></i>
+        </div>
+        <div class="relative z-10 max-w-2xl">
+          <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white mb-3">
+            <i class="fa-solid fa-sparkles text-amber-300 mr-1"></i> Gemini AI Assistant Ready
+          </span>
+          <h2 id="studentWelcomeTitle" class="text-2xl sm:text-3xl font-bold font-display tracking-tight mb-2">Welcome back, Alex! 👋</h2>
+          <p id="studentWelcomeSub" class="text-blue-100 text-sm sm:text-base leading-relaxed">
+            Practice your writing, submit your homework, and receive instant, personalized feedback from your AI English tutor!
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Sub-Navigation for Student -->
+      <div class="flex items-center border-b border-slate-200 space-x-6 text-sm font-semibold">
+        <button onclick="switchStudentTab('submit')" id="tabBtnSubmit" class="py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square"></i> Submit Homework
+        </button>
+        <button onclick="switchStudentTab('history')" id="tabBtnHistory" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left"></i> My Submissions & Grades
+        </button>
+        <button onclick="switchStudentTab('modules')" id="tabBtnModules" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-book-open"></i> Practice Modules
+        </button>
+      </div>
+
+      <!-- TAB 1: SUBMIT HOMEWORK -->
+      <div id="studentTabSubmit" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Form Section -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-display font-bold text-lg text-slate-900 mb-4 flex items-center justify-between">
+              <span><i class="fa-solid fa-file-signature text-blue-600 mr-2"></i> Submit Writing Homework</span>
+              <span class="text-xs font-normal text-slate-400">Step 1 of 2</span>
+            </h3>
+
+            <form id="homeworkForm" onsubmit="handleHomeworkSubmit(event)" class="space-y-4">
+              <!-- Select Assignment Topic -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Select Assignment</label>
+                <select id="assignmentSelect" onchange="onAssignmentSelectChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-medium bg-slate-50">
+                  <!-- Dynamic Options -->
+                </select>
+              </div>
+
+              <!-- Topic Description / Guidelines Box -->
+              <div id="assignmentPromptBox" class="p-3.5 bg-blue-50/70 rounded-xl border border-blue-100 text-xs text-blue-900 space-y-1">
+                <p class="font-semibold text-blue-950" id="promptTitle">Prompt Guidelines:</p>
+                <p id="promptText" class="text-slate-700 leading-relaxed"></p>
+              </div>
+
+              <!-- Student Response Textarea -->
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Your Answer / Essay</label>
+                  <span id="wordCountBadge" class="text-xs text-slate-400">0 words</span>
+                </div>
+                <textarea id="studentTextarea" rows="8" required oninput="updateWordCount()" placeholder="Type or paste your English response here..." class="w-full p-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm leading-relaxed placeholder:text-slate-400"></textarea>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center justify-between pt-2">
+                <button type="button" onclick="loadSampleText()" class="px-3 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5 border border-slate-200">
+                  <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> Insert Sample Draft
+                </button>
+                <button type="submit" id="submitHomeworkBtn" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md shadow-blue-500/20 transition flex items-center gap-2">
+                  <span>Submit & AI Grade</span>
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Live Feedback Display Panel -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm min-h-[420px] flex flex-col justify-between" id="aiResultCard">
+            <!-- Idle Placeholder -->
+            <div id="aiPlaceholder" class="flex-1 flex flex-col items-center justify-center text-center p-8 text-slate-400 space-y-3">
+              <div class="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-2xl">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <h4 class="font-bold text-slate-700 text-base">Instant AI Evaluation Ready</h4>
+              <p class="text-xs max-w-xs text-slate-500 leading-normal">
+                Submit your homework on the left. Gemini AI will evaluate your grammar, vocabulary, coherence, and provide instant corrections!
+              </p>
+            </div>
+
+            <!-- Loading Spinner State -->
+            <div id="aiLoading" class="hidden flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
+              <div class="relative w-12 h-12">
+                <div class="w-12 h-12 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-blue-600 text-xs">
+                  <i class="fa-solid fa-sparkles"></i>
+                </div>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-800 text-sm">Gemini AI is Reviewing Your Writing...</h4>
+                <p class="text-xs text-slate-500 mt-1">Checking grammar, tone, vocabulary & coherence...</p>
+              </div>
+            </div>
+
+            <!-- AI Evaluation Content Output -->
+            <div id="aiEvaluationOutput" class="hidden space-y-5">
+              <!-- Score Badge Header -->
+              <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl">
+                <div>
+                  <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block">Total Grade</span>
+                  <span class="text-3xl font-black text-slate-900" id="outputScore">90/100</span>
+                </div>
+                <div id="outputGradePill" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200">
+                  Grade A
+                </div>
+              </div>
+
+              <!-- Teacher/AI Encouraging Comment -->
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-xs font-bold text-slate-700 block mb-1"><i class="fa-solid fa-comment-dots text-blue-500 mr-1"></i> Teacher Feedback</span>
+                <p id="outputFeedback" class="text-xs text-slate-700 leading-relaxed italic"></p>
+              </div>
+
+              <!-- Category Breakdown Mini Rubrics -->
+              <div>
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Rubric Breakdown</h5>
+                <div class="grid grid-cols-2 gap-2 text-xs" id="rubricBreakdownGrid">
+                  <!-- Dynamic Rubrics -->
+                </div>
+              </div>
+
+              <!-- Corrections List -->
+              <div>
+                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Grammar & Vocabulary Fixes</h5>
+                <div id="correctionsList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  <!-- Dynamic Corrections -->
+                </div>
+              </div>
+
+              <!-- Recommended Revision Topics -->
+              <div class="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-xs">
+                <span class="font-bold text-amber-900 block mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Recommended Practice:</span>
+                <p id="recommendedPracticeText" class="text-amber-800 leading-relaxed"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: STUDENT SUBMISSION HISTORY -->
+      <div id="studentTabHistory" class="hidden space-y-6">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="font-display font-bold text-lg text-slate-900 mb-4 flex items-center justify-between">
+            <span><i class="fa-solid fa-folder-open text-blue-600 mr-2"></i> Submission Log & AI Grades</span>
+            <span class="text-xs text-slate-500">Track all your submitted work</span>
+          </h3>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase font-semibold">
+                  <th class="p-3">Assignment</th>
+                  <th class="p-3">Submitted Date</th>
+                  <th class="p-3">Score</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="studentHistoryTableBody" class="divide-y divide-slate-100">
+                <!-- Dynamic Rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: SELF-PACED LEARNING MODULES -->
+      <div id="studentTabModules" class="hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-display font-bold text-xl text-slate-900">Grammar & Vocabulary Masterclass</h3>
+            <p class="text-xs text-slate-500">Self-paced learning units tailored for Thai Secondary English (M.1 - M.6)</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Module 1 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 font-bold text-xs uppercase">Grammar • Intermediate</span>
+              <h4 class="font-bold text-slate-900 text-base">Active vs Passive Voice</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Learn when to emphasize the action or the receiver of the action. Perfect for formal and academic essays.
+              </p>
+            </div>
+            <button onclick="openModuleModal('active_passive')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
+              Start Practice
+            </button>
+          </div>
+
+          <!-- Module 2 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="px-2.5 py-1 rounded-md bg-purple-50 text-purple-600 font-bold text-xs uppercase">Grammar • Advanced</span>
+              <h4 class="font-bold text-slate-900 text-base">Conditionals (0, 1st, 2nd, 3rd)</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Master hypothetical situations, future possibilities, and regret structures using If-Clauses.
+              </p>
+            </div>
+            <button onclick="openModuleModal('conditionals')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
+              Start Practice
+            </button>
+          </div>
+
+          <!-- Module 3 -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
+            <div class="space-y-3">
+              <span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-600 font-bold text-xs uppercase">Vocabulary • CEFR B1/B2</span>
+              <h4 class="font-bold text-slate-900 text-base">Academic Transitions & Connectors</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Elevate your writing style using cohesive devices such as 'Furthermore', 'Consequently', and 'In contrast'.
+              </p>
+            </div>
+            <button onclick="openModuleModal('transitions')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
+              Start Practice
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TEACHER VIEW SECTION                       -->
+    <!-- ========================================== -->
+    <div id="teacherView" class="hidden space-y-8">
+      
+      <!-- Teacher Header Banner -->
+      <div class="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+          <div>
+            <span class="inline-block bg-slate-800 text-blue-400 border border-slate-700 px-3 py-1 rounded-full text-xs font-medium mb-2">
+              <i class="fa-solid fa-users text-xs mr-1"></i> Managing 250+ Students
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold font-display">Teacher Management & AI Review Hub</h2>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">Review AI evaluations, override scores, track classroom analytics, and manage coursework.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="openCreateAssignmentModal()" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition flex items-center gap-2 shadow-lg shadow-blue-500/20">
+              <i class="fa-solid fa-plus"></i>
+              <span>Create Assignment</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Teacher Stats Overview -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+          <span class="text-xs font-semibold text-slate-400 uppercase">Total Submissions</span>
+          <div class="text-2xl font-black text-slate-900" id="statTotalSubmissions">248</div>
+          <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-arrow-trend-up"></i> +12 today</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+          <span class="text-xs font-semibold text-slate-400 uppercase">Class Average</span>
+          <div class="text-2xl font-black text-slate-900" id="statClassAverage">82.4%</div>
+          <span class="text-xs text-blue-600 font-medium">B+ Average</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+          <span class="text-xs font-semibold text-slate-400 uppercase">Pending Review</span>
+          <div class="text-2xl font-black text-amber-600" id="statPendingReview">3</div>
+          <span class="text-xs text-amber-600 font-medium">Requires approval</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
+          <span class="text-xs font-semibold text-slate-400 uppercase">Top Common Error</span>
+          <div class="text-base font-bold text-slate-800 truncate" id="statCommonError">Subject-Verb Agree</div>
+          <span class="text-xs text-red-500 font-medium">65% of students</span>
+        </div>
+      </div>
+
+      <!-- Submissions Review Table -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-blue-600"></i> Bulk Submissions Oversight
+          </h3>
+
+          <div class="flex items-center gap-2">
+            <input type="text" id="teacherSearchInput" onkeyup="filterTeacherTable()" placeholder="Search student name or topic..." class="px-3.5 py-1.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 outline-none w-48 sm:w-64">
+            <select id="teacherStatusFilter" onchange="filterTeacherTable()" class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-medium bg-slate-50">
+              <option value="ALL">All Status</option>
+              <option value="AI Graded">AI Graded</option>
+              <option value="Teacher Approved">Approved</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase font-semibold">
+                <th class="p-3">Student Name</th>
+                <th class="p-3">Assignment Topic</th>
+                <th class="p-3">AI Score</th>
+                <th class="p-3">Primary Correction Tag</th>
+                <th class="p-3">Status</th>
+                <th class="p-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teacherTableBody" class="divide-y divide-slate-100">
+              <!-- Dynamic Submissions Rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CMS & Site Config Section -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-gear text-slate-600"></i> Teacher CMS & Portal Settings
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Portal Title</label>
+            <input type="text" id="cmsTitleInput" value="English Learning Vibe" class="w-full p-2.5 rounded-xl border border-slate-300 font-medium">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Welcome Subtitle</label>
+            <input type="text" id="cmsSubInput" value="Smart AI Learning & Grading Portal" class="w-full p-2.5 rounded-xl border border-slate-300 font-medium">
+          </div>
+        </div>
+        <button onclick="saveCmsSettings()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold text-xs transition">
+          Save Site Settings
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL 1: TEACHER OVERRIDE / REVIEW MODAL -->
+  <div id="teacherModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="font-display font-bold text-lg text-slate-900" id="modalStudentName">Student Evaluation Review</h3>
+          <p class="text-xs text-slate-500" id="modalAssignmentTitle">Topic</p>
+        </div>
+        <button onclick="closeTeacherModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Student Answer Text -->
+      <div>
+        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Submitted Response</label>
+        <div id="modalStudentResponse" class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 leading-relaxed font-mono"></div>
+      </div>
+
+      <!-- Editable Score & Feedback -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Score (out of 100)</label>
+          <input type="number" id="modalScoreInput" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-900">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Grade Status</label>
+          <select id="modalStatusSelect" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-semibold">
+            <option value="AI Graded">AI Graded (Pending)</option>
+            <option value="Teacher Approved">Teacher Approved</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Teacher Notes / Feedback</label>
+        <textarea id="modalFeedbackInput" rows="3" class="w-full p-3 rounded-xl border border-slate-300 text-xs leading-relaxed"></textarea>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+        <button onclick="closeTeacherModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
+        <button onclick="saveTeacherOverride()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-md shadow-blue-500/20">
+          Approve & Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: GEMINI API KEY CONFIGURATION MODAL -->
+  <div id="apiKeyModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-display font-bold text-base text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-key text-amber-500"></i> Gemini API Settings
+        </h3>
+        <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Enter your Gemini API Key to enable real-time AI homework grading. If left blank, the system uses a smart pre-configured AI simulator.
+      </p>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">Gemini API Key</label>
+        <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-mono">
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="closeApiKeyModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600">Close</button>
+        <button onclick="saveApiKey()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold">Save Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: PRACTICE MODULE MODAL -->
+  <div id="moduleModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-display font-bold text-base text-slate-900" id="moduleModalTitle">Module Practice</h3>
+        <button onclick="closeModuleModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="moduleModalContent" class="space-y-3 text-xs text-slate-700">
+        <!-- Content injected dynamically -->
+      </div>
+
+      <div class="pt-2 flex justify-end">
+        <button onclick="closeModuleModal()" class="px-5 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: CREATE ASSIGNMENT MODAL -->
+  <div id="createAssignmentModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-display font-bold text-base text-slate-900">Create New Assignment</h3>
+        <button onclick="closeCreateAssignmentModal()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Assignment Title</label>
+          <input type="text" id="newAssignTitle" placeholder="e.g. My Favorite Holiday Experience" class="w-full p-2.5 rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Prompt / Instructions</label>
+          <textarea id="newAssignPrompt" rows="3" placeholder="Write 100-150 words about..." class="w-full p-2.5 rounded-xl border border-slate-300"></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeCreateAssignmentModal()" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600">Cancel</button>
+        <button onclick="saveNewAssignment()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold">Publish Assignment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+      <p>© 2026 English Learning Vibe • Interactive AI Secondary English Engine</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // ==========================================
+    // INITIAL DATA & APP STATE
+    // ==========================================
+    let currentRole = 'student'; // 'student' or 'teacher'
+    let geminiApiKey = '';
+
+    // Sample Assignments Data
+    let assignments = [
+      {
+        id: 'assign1',
+        title: 'Essay: My Dream Career & Future Goals',
+        prompt: 'Write 3 to 5 sentences describing what job you want to do in the future and explain why. Use at least two transition words (e.g. Furthermore, In addition).'
+      },
+      {
+        id: 'assign2',
+        title: 'Grammar Exercise: Environmental Protection',
+        prompt: 'Write 3 sentences using Passive Voice to describe actions being taken to protect the planet (e.g. "Trees are planted...").'
+      },
+      {
+        id: 'assign3',
+        title: 'Reading Reflection: Technology in School',
+        prompt: 'Do you think smartphones should be allowed in high school classrooms? State your opinion with two reasons.'
+      }
+    ];
+
+    // Mock/Saved Submissions for 250+ Students Simulation
+    let submissions = [
+      {
+        id: 'sub_1',
+        studentName: 'Somchai Jaidee (M.4/1)',
+        assignmentId: 'assign1',
+        assignmentTitle: 'Essay: My Dream Career & Future Goals',
+        responseText: 'In the future, I want to become a software engineer. Because I like build apps. In addition, software engineers is earning good salary.',
+        score: 78,
+        status: 'AI Graded',
+        primaryTag: 'Subject-Verb Agreement',
+        feedback: 'Good overall effort Somchai! Watch out for subject-verb agreement with plural nouns like "engineers".',
+        rubrics: { grammar: 70, vocabulary: 80, relevance: 85, coherence: 75 },
+        corrections: [
+          { original: 'software engineers is earning', corrected: 'software engineers are earning', reason: 'Plural subject "engineers" requires plural verb "are".' },
+          { original: 'Because I like build apps', corrected: 'Because I like building apps', reason: 'Use gerund (-ing) after verb "like".' }
+        ],
+        recommendedPractice: 'Subject-Verb Agreement & Gerunds after preference verbs.'
+      },
+      {
+        id: 'sub_2',
+        studentName: 'Somsri Rakเรียน (M.4/2)',
+        assignmentId: 'assign2',
+        assignmentTitle: 'Grammar Exercise: Environmental Protection',
+        responseText: 'Plastic bottles are recycled every day by people. Many trees were planted last week in our school.',
+        score: 95,
+        status: 'Teacher Approved',
+        primaryTag: 'Excellent Passive Voice',
+        feedback: 'Excellent passive voice structures! Accurate tense usage.',
+        rubrics: { grammar: 98, vocabulary: 92, relevance: 95, coherence: 95 },
+        corrections: [],
+        recommendedPractice: 'Advanced passive voice with modal verbs.'
+      },
+      {
+        id: 'sub_3',
+        studentName: 'Nipon Wong (M.5/1)',
+        assignmentId: 'assign1',
+        assignmentTitle: 'Essay: My Dream Career & Future Goals',
+        responseText: 'I want to be doctor. I study hard for pass exam.',
+        score: 65,
+        status: 'AI Graded',
+        primaryTag: 'Missing Articles & Infinitive',
+        feedback: 'Keep trying Nipon! Remember to use articles (a/an) before singular countable jobs.',
+        rubrics: { grammar: 60, vocabulary: 65, relevance: 75, coherence: 60 },
+        corrections: [
+          { original: 'want to be doctor', corrected: 'want to be a doctor', reason: 'Singular noun requires article "a".' },
+          { original: 'study hard for pass', corrected: 'study hard to pass', reason: 'Use "to + infinitive" to express purpose.' }
+        ],
+        recommendedPractice: 'Articles (A/An/The) and Infinitive of Purpose.'
+      }
+    ];
+
+    let currentEditingSubId = null;
+
+    // ==========================================
+    // INIT ON LOAD
+    // ==========================================
+    window.onload = function() {
+      populateAssignmentSelect();
+      renderStudentHistory();
+      renderTeacherTable();
+      updateTeacherStats();
+    };
+
+    // ==========================================
+    // ROLE SWITCHER
+    // ==========================================
+    function switchRole(role) {
+      currentRole = role;
+      const studentBtn = document.getElementById('btnStudentRole');
+      const teacherBtn = document.getElementById('btnTeacherRole');
+      const studentView = document.getElementById('studentView');
+      const teacherView = document.getElementById('teacherView');
+
+      if (role === 'student') {
+        studentBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm";
+        teacherBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all";
+        studentView.classList.remove('hidden');
+        teacherView.classList.add('hidden');
+      } else {
+        teacherBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm";
+        studentBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all";
+        teacherView.classList.remove('hidden');
+        studentView.classList.add('hidden');
+        renderTeacherTable();
+        updateTeacherStats();
+      }
+    }
+
+    // ==========================================
+    // STUDENT TABS NAVIGATION
+    // ==========================================
+    function switchStudentTab(tab) {
+      const tabSubmit = document.getElementById('studentTabSubmit');
+      const tabHistory = document.getElementById('studentTabHistory');
+      const tabModules = document.getElementById('studentTabModules');
+
+      const btnSubmit = document.getElementById('tabBtnSubmit');
+      const btnHistory = document.getElementById('tabBtnHistory');
+      const btnModules = document.getElementById('tabBtnModules');
+
+      // Reset styles
+      [btnSubmit, btnHistory, btnModules].forEach(btn => {
+        btn.className = "py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2";
+      });
+
+      tabSubmit.classList.add('hidden');
+      tabHistory.classList.add('hidden');
+      tabModules.classList.add('hidden');
+
+      if (tab === 'submit') {
+        tabSubmit.classList.remove('hidden');
+        btnSubmit.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
+      } else if (tab === 'history') {
+        tabHistory.classList.remove('hidden');
+        btnHistory.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
+        renderStudentHistory();
+      } else if (tab === 'modules') {
+        tabModules.classList.remove('hidden');
+        btnModules.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
+      }
+    }
+
+    // ==========================================
+    // ASSIGNMENT SELECT & FORM LOGIC
+    // ==========================================
+    function populateAssignmentSelect() {
+      const select = document.getElementById('assignmentSelect');
+      select.innerHTML = '';
+      assignments.forEach(assign => {
+        const opt = document.createElement('option');
+        opt.value = assign.id;
+        opt.textContent = assign.title;
+        select.appendChild(opt);
+      });
+      onAssignmentSelectChange();
+    }
+
+    function onAssignmentSelectChange() {
+      const selectVal = document.getElementById('assignmentSelect').value;
+      const assign = assignments.find(a => a.id === selectVal);
+      if (assign) {
+        document.getElementById('promptTitle').textContent = assign.title;
+        document.getElementById('promptText').textContent = assign.prompt;
+      }
+    }
+
+    function updateWordCount() {
+      const text = document.getElementById('studentTextarea').value.trim();
+      const count = text ? text.split(/\s+/).length : 0;
+      document.getElementById('wordCountBadge').textContent = `${count} words`;
+    }
+
+    function loadSampleText() {
+      const selectVal = document.getElementById('assignmentSelect').value;
+      if (selectVal === 'assign1') {
+        document.getElementById('studentTextarea').value = "In the future, I want to become an pilot. Because I love traveling to many countries. Furthermore, pilots is responsible for safety.";
+      } else if (selectVal === 'assign2') {
+        document.getElementById('studentTextarea').value = "Plastic trash are collected by students every Friday. Trees is planted to make air fresh.";
+      } else {
+        document.getElementById('studentTextarea').value = "I think smartphones should allowed in class because students can search vocabulary fastly.";
+      }
+      updateWordCount();
+    }
+
+    // ==========================================
+    // GEMINI AI EVALUATION ENGINE
+    // ==========================================
+    async function handleHomeworkSubmit(event) {
+      event.preventDefault();
+
+      const text = document.getElementById('studentTextarea').value.trim();
+      if (!text) return;
+
+      const assignId = document.getElementById('assignmentSelect').value;
+      const assignObj = assignments.find(a => a.id === assignId);
+
+      // UI Loading state
+      document.getElementById('aiPlaceholder').classList.add('hidden');
+      document.getElementById('aiEvaluationOutput').classList.add('hidden');
+      document.getElementById('aiLoading').classList.remove('hidden');
+
+      let evalResult = null;
+
+      if (geminiApiKey) {
+        // Real Gemini API Call
+        try {
+          evalResult = await callGeminiAPI(assignObj.prompt, text);
+        } catch (err) {
+          console.warn('Gemini API Call failed, falling back to smart engine', err);
+          evalResult = generateSmartFallbackResult(text);
+        }
+      } else {
+        // Smart Local AI Simulator delay simulation
+        await new Promise(r => setTimeout(r, 1200));
+        evalResult = generateSmartFallbackResult(text);
+      }
+
+      // Hide Loading & Render Output
+      document.getElementById('aiLoading').classList.add('hidden');
+      document.getElementById('aiEvaluationOutput').classList.remove('hidden');
+
+      renderEvaluationResult(evalResult);
+
+      // Save to global submissions
+      const newSub = {
+        id: 'sub_' + Date.now(),
+        studentName: 'Alex Student (You)',
+        assignmentId: assignId,
+        assignmentTitle: assignObj.title,
+        responseText: text,
+        score: evalResult.score,
+        status: 'AI Graded',
+        primaryTag: evalResult.corrections.length > 0 ? evalResult.corrections[0].reason.split(' ')[0] : 'Grammar Correct',
+        feedback: evalResult.feedback,
+        rubrics: evalResult.rubrics,
+        corrections: evalResult.corrections,
+        recommendedPractice: evalResult.recommendedPractice
+      };
+
+      submissions.unshift(newSub);
+    }
+
+    // Call Gemini API Function
+    async function callGeminiAPI(promptGuidelines, studentText) {
+      const systemInstruction = `
+        You are an encouraging, empathetic high school English teacher evaluating secondary students (CEFR A2-B1 level).
+        Evaluate the student submission based on:
+        1. Score out of 100
+        2. Rubrics (Grammar, Vocabulary, Relevance, Coherence out of 100)
+        3. Friendly teacher feedback
+        4. Specific grammar/spelling corrections (Original -> Corrected + Reason)
+        5. Recommended practice grammar points.
+
+        Return ONLY a raw JSON object matching this structure:
+        {
+          "score": 85,
+          "grade": "Grade A",
+          "feedback": "Encouraging comment...",
+          "rubrics": { "grammar": 80, "vocabulary": 85, "relevance": 90, "coherence": 85 },
+          "corrections": [
+            { "original": "wrong text", "corrected": "fixed text", "reason": "Grammar rule explanation" }
+          ],
+          "recommendedPractice": "Focus topic..."
+        }
+      `;
+
+      const userPrompt = `
+        Assignment Guidelines: "${promptGuidelines}"
+        Student Writing: "${studentText}"
+      `;
+
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`;
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: userPrompt }] }],
+          systemInstruction: { parts: [{ text: systemInstruction }] },
+          generationConfig: { responseMimeType: "application/json" }
+        })
+      });
+
+      const data = await response.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      return JSON.parse(rawText);
+    }
+
+    // Smart Local Fallback Evaluator
+    function generateSmartFallbackResult(text) {
+      let corrections = [];
+      let score = 88;
+
+      if (text.includes("is earning") || text.includes("pilots is") || text.includes("trees is")) {
+        corrections.push({
+          original: "pilots is / trees is",
+          corrected: "pilots are / trees are",
+          reason: "Plural subject requires plural verb 'are'."
+        });
+        score -= 8;
+      }
+
+      if (text.includes("become an pilot") || text.includes("want to be doctor")) {
+        corrections.push({
+          original: "an pilot / be doctor",
+          corrected: "a pilot / be a doctor",
+          reason: "Use 'a' before consonant sounds."
+        });
+        score -= 6;
+      }
+
+      if (text.includes("fastly")) {
+        corrections.push({
+          original: "fastly",
+          corrected: "fast / quickly",
+          reason: "'Fast' is both an adjective and an adverb."
+        });
+        score -= 5;
+      }
+
+      if (corrections.length === 0) {
+        corrections.push({
+          original: "Overall style",
+          corrected: "Consider adding complex sentences",
+          reason: "Great grammar! Try using more connectors like 'Furthermore'."
+        });
+      }
+
+      return {
+        score: Math.max(score, 65),
+        grade: score >= 80 ? 'Grade A' : 'Grade B',
+        feedback: "Great job completing your assignment! Your ideas are clear and well-organized. Keep refining your grammar points!",
+        rubrics: {
+          grammar: Math.max(score - 5, 60),
+          vocabulary: score,
+          relevance: 90,
+          coherence: 85
+        },
+        corrections: corrections,
+        recommendedPractice: "Subject-Verb Agreement and Article Usage (A/An)."
+      };
+    }
+
+    // Render Evaluation Card
+    function renderEvaluationResult(res) {
+      document.getElementById('outputScore').textContent = `${res.score}/100`;
+      document.getElementById('outputFeedback').textContent = `"${res.feedback}"`;
+      document.getElementById('recommendedPracticeText').textContent = res.recommendedPractice;
+
+      // Rubrics
+      const rubricGrid = document.getElementById('rubricBreakdownGrid');
+      rubricGrid.innerHTML = `
+        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
+          <span class="text-slate-600 font-medium">Grammar</span>
+          <span class="font-bold text-slate-800">${res.rubrics.grammar}%</span>
+        </div>
+        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
+          <span class="text-slate-600 font-medium">Vocabulary</span>
+          <span class="font-bold text-slate-800">${res.rubrics.vocabulary}%</span>
+        </div>
+        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
+          <span class="text-slate-600 font-medium">Relevance</span>
+          <span class="font-bold text-slate-800">${res.rubrics.relevance}%</span>
+        </div>
+        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
+          <span class="text-slate-600 font-medium">Coherence</span>
+          <span class="font-bold text-slate-800">${res.rubrics.coherence}%</span>
+        </div>
+      `;
+
+      // Corrections
+      const list = document.getElementById('correctionsList');
+      list.innerHTML = '';
+      if (res.corrections.length === 0) {
+        list.innerHTML = '<p class="text-xs text-emerald-600 font-semibold">No critical errors found! Excellent work.</p>';
+      } else {
+        res.corrections.forEach(c => {
+          const div = document.createElement('div');
+          div.className = "p-2.5 bg-red-50/50 border border-red-100 rounded-xl space-y-1 text-xs";
+          div.innerHTML = `
+            <div class="flex items-center gap-1.5 font-bold">
+              <span class="line-through text-red-500">${c.original}</span>
+              <i class="fa-solid fa-arrow-right text-slate-400 text-[10px]"></i>
+              <span class="text-emerald-700">${c.corrected}</span>
+            </div>
+            <p class="text-[11px] text-slate-600">${c.reason}</p>
+          `;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    // ==========================================
+    // RENDER TABLES & HISTORY
+    // ==========================================
+    function renderStudentHistory() {
+      const tbody = document.getElementById('studentHistoryTableBody');
+      tbody.innerHTML = '';
+
+      submissions.forEach(sub => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/80 transition";
+        tr.innerHTML = `
+          <td class="p-3 font-semibold text-slate-800">${sub.assignmentTitle}</td>
+          <td class="p-3 text-xs text-slate-500">Today</td>
+          <td class="p-3"><span class="font-bold ${sub.score >= 80 ? 'text-emerald-600' : 'text-blue-600'}">${sub.score}/100</span></td>
+          <td class="p-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${sub.status === 'Teacher Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}">
+              ${sub.status}
+            </span>
+          </td>
+          <td class="p-3 text-right">
+            <button onclick="viewSubDetail('${sub.id}')" class="text-xs font-semibold text-blue-600 hover:underline">View Details</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderTeacherTable() {
+      const tbody = document.getElementById('teacherTableBody');
+      tbody.innerHTML = '';
+
+      const filterText = document.getElementById('teacherSearchInput').value.toLowerCase();
+      const statusFilter = document.getElementById('teacherStatusFilter').value;
+
+      const filtered = submissions.filter(s => {
+        const matchesText = s.studentName.toLowerCase().includes(filterText) || s.assignmentTitle.toLowerCase().includes(filterText);
+        const matchesStatus = statusFilter === 'ALL' || s.status === statusFilter;
+        return matchesText && matchesStatus;
+      });
+
+      filtered.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="p-3 font-bold text-slate-800">${s.studentName}</td>
+          <td class="p-3 text-slate-600 text-xs">${s.assignmentTitle}</td>
+          <td class="p-3 font-black text-slate-900">${s.score}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">${s.primaryTag}</span></td>
+          <td class="p-3">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${s.status === 'Teacher Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">
+              ${s.status}
+            </span>
+          </td>
+          <td class="p-3 text-right">
+            <button onclick="openTeacherModal('${s.id}')" class="px-3 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium">
+              Review / Override
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTeacherTable() {
+      renderTeacherTable();
+    }
+
+    function updateTeacherStats() {
+      document.getElementById('statTotalSubmissions').textContent = 245 + submissions.length;
+      
+      const sum = submissions.reduce((acc, curr) => acc + curr.score, 0);
+      const avg = (sum / submissions.length).toFixed(1);
+      document.getElementById('statClassAverage').textContent = `${avg}%`;
+
+      const pending = submissions.filter(s => s.status === 'AI Graded').length;
+      document.getElementById('statPendingReview').textContent = pending;
+    }
+
+    // ==========================================
+    // TEACHER OVERRIDE MODAL ACTIONS
+    // ==========================================
+    function openTeacherModal(subId) {
+      currentEditingSubId = subId;
+      const sub = submissions.find(s => s.id === subId);
+      if (!sub) return;
+
+      document.getElementById('modalStudentName').textContent = `Reviewing: ${sub.studentName}`;
+      document.getElementById('modalAssignmentTitle').textContent = sub.assignmentTitle;
+      document.getElementById('modalStudentResponse').textContent = sub.responseText;
+      document.getElementById('modalScoreInput').value = sub.score;
+      document.getElementById('modalStatusSelect').value = sub.status;
+      document.getElementById('modalFeedbackInput').value = sub.feedback;
+
+      document.getElementById('teacherModal').classList.remove('hidden');
+    }
+
+    function closeTeacherModal() {
+      document.getElementById('teacherModal').classList.add('hidden');
+    }
+
+    function saveTeacherOverride() {
+      const sub = submissions.find(s => s.id === currentEditingSubId);
+      if (sub) {
+        sub.score = parseInt(document.getElementById('modalScoreInput').value, 10);
+        sub.status = document.getElementById('modalStatusSelect').value;
+        sub.feedback = document.getElementById('modalFeedbackInput').value;
+      }
+
+      closeTeacherModal();
+      renderTeacherTable();
+      updateTeacherStats();
+    }
+
+    // ==========================================
+    // API KEY MODAL
+    // ==========================================
+    function openApiKeyModal() {
+      document.getElementById('apiKeyModal').classList.remove('hidden');
+    }
+
+    function closeApiKeyModal() {
+      document.getElementById('apiKeyModal').classList.add('hidden');
+    }
+
+    function saveApiKey() {
+      const val = document.getElementById('apiKeyInput').value.trim();
+      geminiApiKey = val;
+      const badgeText = document.getElementById('apiKeyStatusText');
+      
+      if (val) {
+        badgeText.textContent = "Gemini API Active";
+        document.getElementById('apiKeyBadge').className = "hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+      } else {
+        badgeText.textContent = "Demo API Mode";
+        document.getElementById('apiKeyBadge').className = "hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200";
+      }
+      closeApiKeyModal();
+    }
+
+    // ==========================================
+    // LEARNING MODULES MODAL
+    // ==========================================
+    function openModuleModal(type) {
+      const modal = document.getElementById('moduleModal');
+      const title = document.getElementById('moduleModalTitle');
+      const content = document.getElementById('moduleModalContent');
+
+      if (type === 'active_passive') {
+        title.textContent = "Active vs Passive Voice Key";
+        content.innerHTML = `
+          <p class="font-bold text-slate-800">Rule Summary:</p>
+          <p>• <strong>Active:</strong> Subject + Verb + Object (e.g. "The teacher explains the lesson.")</p>
+          <p>• <strong>Passive:</strong> Object + Be + Past Participle (V.3) + (by Subject) (e.g. "The lesson is explained by the teacher.")</p>
+          <div class="p-3 bg-blue-50 rounded-xl mt-2 font-mono">
+            Quick Practice: "Students write essays" ➔ "Essays are written by students."
+          </div>
+        `;
+      } else if (type === 'conditionals') {
+        title.textContent = "Conditionals Overview";
+        content.innerHTML = `
+          <p class="font-bold text-slate-800">1st Conditional (Real Future):</p>
+          <p>• <strong>Structure:</strong> If + Present Simple, Will + V.1</p>
+          <p>• <strong>Example:</strong> If I study hard, I will pass the exam.</p>
+        `;
+      } else {
+        title.textContent = "Transitions Cheat Sheet";
+        content.innerHTML = `
+          <p class="font-bold text-slate-800">Addition Connectors:</p>
+          <p>• Furthermore, In addition, Moreover</p>
+          <p class="font-bold text-slate-800 mt-2">Contrast Connectors:</p>
+          <p>• However, In contrast, On the other hand</p>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModuleModal() {
+      document.getElementById('moduleModal').classList.add('hidden');
+    }
+
+    // ==========================================
+    // CREATE ASSIGNMENT MODAL
+    // ==========================================
+    function openCreateAssignmentModal() {
+      document.getElementById('createAssignmentModal').classList.remove('hidden');
+    }
+
+    function closeCreateAssignmentModal() {
+      document.getElementById('createAssignmentModal').classList.add('hidden');
+    }
+
+    function saveNewAssignment() {
+      const title = document.getElementById('newAssignTitle').value.trim();
+      const prompt = document.getElementById('newAssignPrompt').value.trim();
+
+      if (!title || !prompt) return;
+
+      const newId = 'assign_' + Date.now();
+      assignments.push({ id: newId, title, prompt });
+      populateAssignmentSelect();
+      closeCreateAssignmentModal();
+      alert("New Assignment published successfully!");
+    }
+
+    // CMS Settings
+    function saveCmsSettings() {
+      const title = document.getElementById('cmsTitleInput').value;
+      const sub = document.getElementById('cmsSubInput').value;
+
+      document.getElementById('appHeaderTitle').textContent = title;
+      document.getElementById('appHeaderSubtitle').textContent = sub;
+      alert("Site settings updated!");
+    }
+
+    function viewSubDetail(id) {
+      switchStudentTab('submit');
+      const sub = submissions.find(s => s.id === id);
+      if (sub) {
+        document.getElementById('studentTextarea').value = sub.responseText;
+        document.getElementById('assignmentSelect').value = sub.assignmentId;
+        onAssignmentSelectChange();
+        renderEvaluationResult(sub);
+        document.getElementById('aiPlaceholder').classList.add('hidden');
+        document.getElementById('aiEvaluationOutput').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
