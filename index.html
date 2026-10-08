@@ -1,1229 +1,484 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>English Learning Vibe - AI Homework & Learning Portal</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Kanit & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'Kanit', 'sans-serif'],
-            display: ['Kanit', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-            },
-            accent: {
-              500: '#8b5cf6',
-              600: '#7c3aed',
-            }
-          }
-        }
-      }
-    }
-  </script>
-  
-  <style>
-    body {
-      font-family: 'Inter', 'Kanit', sans-serif;
-      background-color: #f8fafc;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Vibe - English Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; }
+    </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- Top Navigation Header -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Logo & Branding -->
-        <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-xl gradient-bg flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
-            <i class="fa-solid font-bold text-lg fa-graduation-cap"></i>
-          </div>
-          <div>
-            <h1 id="appHeaderTitle" class="font-display font-bold text-lg text-slate-900 leading-tight">English Learning Vibe</h1>
-            <p id="appHeaderSubtitle" class="text-xs text-slate-500 font-medium">Smart AI Learning & Grading Portal</p>
-          </div>
-        </div>
-
-        <!-- Role Switcher & Settings -->
-        <div class="flex items-center gap-3">
-          <!-- API Key Status Indicator -->
-          <button onclick="openApiKeyModal()" id="apiKeyBadge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition">
-            <i class="fa-solid fa-key text-amber-500"></i>
-            <span id="apiKeyStatusText">Demo API Mode</span>
-          </button>
-
-          <!-- Navigation Switcher (Student / Teacher View) -->
-          <div class="bg-slate-100 p-1 rounded-xl flex items-center border border-slate-200">
-            <button id="btnStudentRole" onclick="switchRole('student')" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm">
-              <i class="fa-solid fa-user-graduate"></i>
-              <span>Student</span>
-            </button>
-            <button id="btnTeacherRole" onclick="switchRole('teacher')" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
-              <i class="fa-solid fa-chalkboard-user"></i>
-              <span>Teacher</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
-
-    <!-- ========================================== -->
-    <!-- STUDENT VIEW SECTION                       -->
-    <!-- ========================================== -->
-    <div id="studentView" class="space-y-8">
-      
-      <!-- Welcome Banner -->
-      <div class="gradient-bg rounded-2xl p-6 sm:p-8 text-white shadow-xl shadow-blue-500/10 relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black select-none">
-          <i class="fa-solid fa-language"></i>
-        </div>
-        <div class="relative z-10 max-w-2xl">
-          <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white mb-3">
-            <i class="fa-solid fa-sparkles text-amber-300 mr-1"></i> Gemini AI Assistant Ready
-          </span>
-          <h2 id="studentWelcomeTitle" class="text-2xl sm:text-3xl font-bold font-display tracking-tight mb-2">Welcome back, Alex! 👋</h2>
-          <p id="studentWelcomeSub" class="text-blue-100 text-sm sm:text-base leading-relaxed">
-            Practice your writing, submit your homework, and receive instant, personalized feedback from your AI English tutor!
-          </p>
-        </div>
-      </div>
-
-      <!-- Quick Sub-Navigation for Student -->
-      <div class="flex items-center border-b border-slate-200 space-x-6 text-sm font-semibold">
-        <button onclick="switchStudentTab('submit')" id="tabBtnSubmit" class="py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square"></i> Submit Homework
-        </button>
-        <button onclick="switchStudentTab('history')" id="tabBtnHistory" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-clock-rotate-left"></i> My Submissions & Grades
-        </button>
-        <button onclick="switchStudentTab('modules')" id="tabBtnModules" class="py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-book-open"></i> Practice Modules
-        </button>
-      </div>
-
-      <!-- TAB 1: SUBMIT HOMEWORK -->
-      <div id="studentTabSubmit" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- Form Section -->
-        <div class="lg:col-span-7 space-y-6">
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-            <h3 class="font-display font-bold text-lg text-slate-900 mb-4 flex items-center justify-between">
-              <span><i class="fa-solid fa-file-signature text-blue-600 mr-2"></i> Submit Writing Homework</span>
-              <span class="text-xs font-normal text-slate-400">Step 1 of 2</span>
-            </h3>
-
-            <form id="homeworkForm" onsubmit="handleHomeworkSubmit(event)" class="space-y-4">
-              <!-- Select Assignment Topic -->
-              <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Select Assignment</label>
-                <select id="assignmentSelect" onchange="onAssignmentSelectChange()" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-medium bg-slate-50">
-                  <!-- Dynamic Options -->
-                </select>
-              </div>
-
-              <!-- Topic Description / Guidelines Box -->
-              <div id="assignmentPromptBox" class="p-3.5 bg-blue-50/70 rounded-xl border border-blue-100 text-xs text-blue-900 space-y-1">
-                <p class="font-semibold text-blue-950" id="promptTitle">Prompt Guidelines:</p>
-                <p id="promptText" class="text-slate-700 leading-relaxed"></p>
-              </div>
-
-              <!-- Student Response Textarea -->
-              <div>
-                <div class="flex items-center justify-between mb-1.5">
-                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Your Answer / Essay</label>
-                  <span id="wordCountBadge" class="text-xs text-slate-400">0 words</span>
+    <!-- Auth View (Login Screen) -->
+    <div id="auth-screen" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 max-w-md w-full border border-slate-100">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-3 text-3xl shadow-lg shadow-indigo-200">
+                    <i class="fa-solid fa-graduation-cap"></i>
                 </div>
-                <textarea id="studentTextarea" rows="8" required oninput="updateWordCount()" placeholder="Type or paste your English response here..." class="w-full p-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm leading-relaxed placeholder:text-slate-400"></textarea>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex items-center justify-between pt-2">
-                <button type="button" onclick="loadSampleText()" class="px-3 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1.5 border border-slate-200">
-                  <i class="fa-solid fa-wand-magic-sparkles text-purple-600"></i> Insert Sample Draft
-                </button>
-                <button type="submit" id="submitHomeworkBtn" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md shadow-blue-500/20 transition flex items-center gap-2">
-                  <span>Submit & AI Grade</span>
-                  <i class="fa-solid fa-paper-plane"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- Live Feedback Display Panel -->
-        <div class="lg:col-span-5 space-y-6">
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm min-h-[420px] flex flex-col justify-between" id="aiResultCard">
-            <!-- Idle Placeholder -->
-            <div id="aiPlaceholder" class="flex-1 flex flex-col items-center justify-center text-center p-8 text-slate-400 space-y-3">
-              <div class="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-2xl">
-                <i class="fa-solid fa-robot"></i>
-              </div>
-              <h4 class="font-bold text-slate-700 text-base">Instant AI Evaluation Ready</h4>
-              <p class="text-xs max-w-xs text-slate-500 leading-normal">
-                Submit your homework on the left. Gemini AI will evaluate your grammar, vocabulary, coherence, and provide instant corrections!
-              </p>
+                <h2 class="text-2xl font-bold text-slate-800">English Learning Vibe</h2>
+                <p class="text-xs text-slate-500 mt-1">เข้าสู่ระบบห้องเรียนภาษาอังกฤษออนไลน์</p>
             </div>
 
-            <!-- Loading Spinner State -->
-            <div id="aiLoading" class="hidden flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
-              <div class="relative w-12 h-12">
-                <div class="w-12 h-12 rounded-full border-4 border-blue-100 border-t-blue-600 animate-spin"></div>
-                <div class="absolute inset-0 flex items-center justify-center text-blue-600 text-xs">
-                  <i class="fa-solid fa-sparkles"></i>
-                </div>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-800 text-sm">Gemini AI is Reviewing Your Writing...</h4>
-                <p class="text-xs text-slate-500 mt-1">Checking grammar, tone, vocabulary & coherence...</p>
-              </div>
-            </div>
-
-            <!-- AI Evaluation Content Output -->
-            <div id="aiEvaluationOutput" class="hidden space-y-5">
-              <!-- Score Badge Header -->
-              <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl">
+            <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                  <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block">Total Grade</span>
-                  <span class="text-3xl font-black text-slate-900" id="outputScore">90/100</span>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัวนักเรียน / รหัสครู</label>
+                    <input type="text" id="login-id" placeholder="กรอกรหัสประจำตัว (เช่น 1001 หรือ TEACHER)" required class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
-                <div id="outputGradePill" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200">
-                  Grade A
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
+                    <input type="text" id="login-name" placeholder="กรอกชื่อ-นามสกุล" required class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
-              </div>
-
-              <!-- Teacher/AI Encouraging Comment -->
-              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                <span class="text-xs font-bold text-slate-700 block mb-1"><i class="fa-solid fa-comment-dots text-blue-500 mr-1"></i> Teacher Feedback</span>
-                <p id="outputFeedback" class="text-xs text-slate-700 leading-relaxed italic"></p>
-              </div>
-
-              <!-- Category Breakdown Mini Rubrics -->
-              <div>
-                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Rubric Breakdown</h5>
-                <div class="grid grid-cols-2 gap-2 text-xs" id="rubricBreakdownGrid">
-                  <!-- Dynamic Rubrics -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ห้องเรียน</label>
+                    <select id="login-room" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="ม.2/1">ม.2/1</option>
+                        <option value="ม.2/2">ม.2/2</option>
+                        <option value="ม.2/3">ม.2/3</option>
+                        <option value="ครูผู้สอน">สำหรับคุณครู</option>
+                    </select>
                 </div>
-              </div>
-
-              <!-- Corrections List -->
-              <div>
-                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Grammar & Vocabulary Fixes</h5>
-                <div id="correctionsList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                  <!-- Dynamic Corrections -->
-                </div>
-              </div>
-
-              <!-- Recommended Revision Topics -->
-              <div class="p-3 bg-amber-50/70 border border-amber-200 rounded-xl text-xs">
-                <span class="font-bold text-amber-900 block mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Recommended Practice:</span>
-                <p id="recommendedPracticeText" class="text-amber-800 leading-relaxed"></p>
-              </div>
-            </div>
-
-          </div>
+                <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 transition-all">
+                    เข้าสู่ระบบ <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i>
+                </button>
+            </form>
+            <p class="text-[11px] text-center text-slate-400 mt-4">* โหมดคุณครูใช้รหัส: <span class="font-bold text-slate-600">TEACHER</span></p>
         </div>
-      </div>
-
-      <!-- TAB 2: STUDENT SUBMISSION HISTORY -->
-      <div id="studentTabHistory" class="hidden space-y-6">
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="font-display font-bold text-lg text-slate-900 mb-4 flex items-center justify-between">
-            <span><i class="fa-solid fa-folder-open text-blue-600 mr-2"></i> Submission Log & AI Grades</span>
-            <span class="text-xs text-slate-500">Track all your submitted work</span>
-          </h3>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase font-semibold">
-                  <th class="p-3">Assignment</th>
-                  <th class="p-3">Submitted Date</th>
-                  <th class="p-3">Score</th>
-                  <th class="p-3">Status</th>
-                  <th class="p-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody id="studentHistoryTableBody" class="divide-y divide-slate-100">
-                <!-- Dynamic Rows -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 3: SELF-PACED LEARNING MODULES -->
-      <div id="studentTabModules" class="hidden space-y-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="font-display font-bold text-xl text-slate-900">Grammar & Vocabulary Masterclass</h3>
-            <p class="text-xs text-slate-500">Self-paced learning units tailored for Thai Secondary English (M.1 - M.6)</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Module 1 -->
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
-            <div class="space-y-3">
-              <span class="px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 font-bold text-xs uppercase">Grammar • Intermediate</span>
-              <h4 class="font-bold text-slate-900 text-base">Active vs Passive Voice</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Learn when to emphasize the action or the receiver of the action. Perfect for formal and academic essays.
-              </p>
-            </div>
-            <button onclick="openModuleModal('active_passive')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
-              Start Practice
-            </button>
-          </div>
-
-          <!-- Module 2 -->
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
-            <div class="space-y-3">
-              <span class="px-2.5 py-1 rounded-md bg-purple-50 text-purple-600 font-bold text-xs uppercase">Grammar • Advanced</span>
-              <h4 class="font-bold text-slate-900 text-base">Conditionals (0, 1st, 2nd, 3rd)</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Master hypothetical situations, future possibilities, and regret structures using If-Clauses.
-              </p>
-            </div>
-            <button onclick="openModuleModal('conditionals')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
-              Start Practice
-            </button>
-          </div>
-
-          <!-- Module 3 -->
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 transition flex flex-col justify-between">
-            <div class="space-y-3">
-              <span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-600 font-bold text-xs uppercase">Vocabulary • CEFR B1/B2</span>
-              <h4 class="font-bold text-slate-900 text-base">Academic Transitions & Connectors</h4>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Elevate your writing style using cohesive devices such as 'Furthermore', 'Consequently', and 'In contrast'.
-              </p>
-            </div>
-            <button onclick="openModuleModal('transitions')" class="mt-4 w-full py-2 bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-semibold rounded-xl transition">
-              Start Practice
-            </button>
-          </div>
-        </div>
-      </div>
-
     </div>
 
-    <!-- ========================================== -->
-    <!-- TEACHER VIEW SECTION                       -->
-    <!-- ========================================== -->
-    <div id="teacherView" class="hidden space-y-8">
-      
-      <!-- Teacher Header Banner -->
-      <div class="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-          <div>
-            <span class="inline-block bg-slate-800 text-blue-400 border border-slate-700 px-3 py-1 rounded-full text-xs font-medium mb-2">
-              <i class="fa-solid fa-users text-xs mr-1"></i> Managing 250+ Students
-            </span>
-            <h2 class="text-2xl sm:text-3xl font-bold font-display">Teacher Management & AI Review Hub</h2>
-            <p class="text-slate-400 text-xs sm:text-sm mt-1">Review AI evaluations, override scores, track classroom analytics, and manage coursework.</p>
-          </div>
-          <div class="flex items-center gap-3">
-            <button onclick="openCreateAssignmentModal()" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition flex items-center gap-2 shadow-lg shadow-blue-500/20">
-              <i class="fa-solid fa-plus"></i>
-              <span>Create Assignment</span>
-            </button>
-          </div>
+    <!-- Main Navigation Header -->
+    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
+                <div>
+                    <h1 id="site-header-title" class="font-bold text-lg leading-none">English Learning Vibe</h1>
+                    <p id="site-header-sub" class="text-[11px] text-indigo-200 mt-1">Interactive Learning Space</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="text-right hidden sm:block">
+                    <p id="nav-user-name" class="text-xs font-bold leading-tight">ด.ช. สมชาย สายเรียน</p>
+                    <p id="nav-user-role" class="text-[10px] text-indigo-200">นักเรียน ม.2/1 (เลขประจำตัว 1001)</p>
+                </div>
+                <button onclick="handleLogout()" class="px-3 py-1.5 bg-indigo-800 hover:bg-indigo-900 text-indigo-100 rounded-lg text-xs font-medium border border-indigo-500">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ
+                </button>
+            </div>
         </div>
-      </div>
+    </header>
 
-      <!-- Quick Teacher Stats Overview -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <span class="text-xs font-semibold text-slate-400 uppercase">Total Submissions</span>
-          <div class="text-2xl font-black text-slate-900" id="statTotalSubmissions">248</div>
-          <span class="text-xs text-emerald-600 font-medium"><i class="fa-solid fa-arrow-trend-up"></i> +12 today</span>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <span class="text-xs font-semibold text-slate-400 uppercase">Class Average</span>
-          <div class="text-2xl font-black text-slate-900" id="statClassAverage">82.4%</div>
-          <span class="text-xs text-blue-600 font-medium">B+ Average</span>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <span class="text-xs font-semibold text-slate-400 uppercase">Pending Review</span>
-          <div class="text-2xl font-black text-amber-600" id="statPendingReview">3</div>
-          <span class="text-xs text-amber-600 font-medium">Requires approval</span>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <span class="text-xs font-semibold text-slate-400 uppercase">Top Common Error</span>
-          <div class="text-base font-bold text-slate-800 truncate" id="statCommonError">Subject-Verb Agree</div>
-          <span class="text-xs text-red-500 font-medium">65% of students</span>
-        </div>
-      </div>
-
-      <!-- Submissions Review Table -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-list-check text-blue-600"></i> Bulk Submissions Oversight
-          </h3>
-
-          <div class="flex items-center gap-2">
-            <input type="text" id="teacherSearchInput" onkeyup="filterTeacherTable()" placeholder="Search student name or topic..." class="px-3.5 py-1.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-500 outline-none w-48 sm:w-64">
-            <select id="teacherStatusFilter" onchange="filterTeacherTable()" class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-medium bg-slate-50">
-              <option value="ALL">All Status</option>
-              <option value="AI Graded">AI Graded</option>
-              <option value="Teacher Approved">Approved</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-sm">
-            <thead>
-              <tr class="border-b border-slate-200 bg-slate-50 text-xs text-slate-500 uppercase font-semibold">
-                <th class="p-3">Student Name</th>
-                <th class="p-3">Assignment Topic</th>
-                <th class="p-3">AI Score</th>
-                <th class="p-3">Primary Correction Tag</th>
-                <th class="p-3">Status</th>
-                <th class="p-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="teacherTableBody" class="divide-y divide-slate-100">
-              <!-- Dynamic Submissions Rows -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- CMS & Site Config Section -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-gear text-slate-600"></i> Teacher CMS & Portal Settings
-        </h3>
+    <!-- App Container -->
+    <div class="max-w-7xl mx-auto px-4 py-6 flex-1 flex flex-col md:flex-row gap-6 w-full">
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Portal Title</label>
-            <input type="text" id="cmsTitleInput" value="English Learning Vibe" class="w-full p-2.5 rounded-xl border border-slate-300 font-medium">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Welcome Subtitle</label>
-            <input type="text" id="cmsSubInput" value="Smart AI Learning & Grading Portal" class="w-full p-2.5 rounded-xl border border-slate-300 font-medium">
-          </div>
-        </div>
-        <button onclick="saveCmsSettings()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-semibold text-xs transition">
-          Save Site Settings
-        </button>
-      </div>
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white rounded-2xl shadow-sm border border-slate-200 p-4 shrink-0 flex flex-col justify-between">
+            <nav class="space-y-1">
+                <p class="text-[11px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">เมนูเรียนรู้</p>
+                <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-indigo-50 text-indigo-700">
+                    <i class="fa-solid fa-chart-pie w-5"></i> <span>ภาพรวม (Dashboard)</span>
+                </a>
+                <a href="#" onclick="showSection('modules')" id="nav-modules" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-book-open w-5"></i> <span>หน่วยการเรียนรู้</span>
+                </a>
+                <a href="#" onclick="showSection('submit')" id="nav-submit" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-paper-plane w-5"></i> <span>ส่งการบ้าน (AI ตรวจ)</span>
+                </a>
+                <a href="#" onclick="showSection('grades')" id="nav-grades" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-square-poll-vertical w-5"></i> <span>สมุดคะแนนและรายงาน</span>
+                </a>
 
+                <!-- Teacher Menu -->
+                <div id="teacher-menu" class="pt-4 border-t border-slate-100 mt-4 space-y-1 hidden">
+                    <p class="text-[11px] font-bold text-amber-600 px-3 uppercase tracking-wider mb-2">ระบบจัดการของคุณครู</p>
+                    <a href="#" onclick="showSection('roster')" id="nav-roster" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-users-rectangle w-5"></i> <span>นำเข้านักเรียนรายห้อง</span>
+                    </a>
+                    <a href="#" onclick="showSection('add-content')" id="nav-add-content" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                        <i class="fa-solid fa-folder-plus w-5"></i> <span>เพิ่มบทเรียน/การบ้าน</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 min-h-[550px]">
+            
+            <!-- SECTION: Dashboard -->
+            <section id="sec-dashboard" class="space-y-6">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="relative z-10">
+                        <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium inline-block mb-3">English Learning Space</span>
+                        <h2 id="dash-welcome-title" class="text-2xl font-bold mb-2">ยินดีต้อนรับสู่ห้องเรียนภาษาอังกฤษ!</h2>
+                        <p id="dash-welcome-desc" class="text-indigo-100 text-sm max-w-2xl">ส่งการบ้าน เรียนรู้บทเรียนออนไลน์ และรับผลการวิเคราะห์คะแนนจาก AI ได้ทันที</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">งานที่ส่งแล้ว</p>
+                            <p id="stat-submitted" class="text-xl font-bold text-slate-800">1 ชิ้น</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">การบ้านรอส่ง</p>
+                            <p id="stat-pending" class="text-xl font-bold text-slate-800">1 ชิ้น</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500">คะแนนสะสมเฉลี่ย</p>
+                            <p id="stat-score" class="text-xl font-bold text-slate-800">8.5 / 10</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Submit Assignment -->
+            <section id="sec-submit" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งการบ้านออนไลน์ (ระบบ AI ช่วยตรวจ)</h2>
+                    <p class="text-xs text-slate-500 mt-1">นักเรียนสามารถพิมพ์คำตอบ อัปโหลดรูปถ่ายสมุด หรือไฟล์ PDF เพื่อให้ AI ช่วยประเมินคะแนนได้ทันที</p>
+                </div>
+
+                <form onsubmit="handleAssignmentSubmit(event)" class="space-y-4 max-w-2xl">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">เลือกการบ้าน / แบบฝึกหัด</label>
+                        <select id="sub-assignment-id" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="HW1">HW1: Present Perfect Tense Writing (10 คะแนน)</option>
+                            <option value="HW2">HW2: Reading Comprehension Exercise (10 คะแนน)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">พิมพ์คำตอบภาษาอังกฤษ</label>
+                        <textarea id="sub-text-answer" rows="4" placeholder="พิมพ์ประโยคหรือเนื้อหาคำตอบของคุณที่นี่..." class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                        <label class="block text-xs font-bold text-slate-700 mb-1"><i class="fa-solid fa-file-arrow-up mr-1 text-indigo-600"></i> แนบรูปถ่ายสมุด / ไฟล์ PDF</label>
+                        <input type="file" id="sub-file" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        <p class="text-[11px] text-slate-400 mt-2">* รองรับไฟล์รูปภาพสมุดโน้ต (JPG/PNG) และไฟล์เอกสาร PDF</p>
+                    </div>
+
+                    <button type="submit" id="btn-submit-hw" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-md transition-all flex items-center justify-center">
+                        <span>ส่งงานและให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>
+                    </button>
+                </form>
+
+                <div id="ai-result-box" class="hidden p-5 rounded-2xl bg-indigo-50 border border-indigo-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-indigo-100 pb-2">
+                        <span class="font-bold text-indigo-900 text-sm"><i class="fa-solid fa-microchip text-indigo-600 mr-2"></i>ผลการวิเคราะห์และตรวจคะแนนโดย AI</span>
+                        <span id="ai-score-badge" class="px-3 py-1 bg-emerald-500 text-white rounded-full font-bold text-xs">8.5 / 10</span>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-700">จุดเด่น (Strengths):</p>
+                        <p id="ai-strengths" class="text-xs text-slate-600 mt-0.5">- ใช้คำศัพท์ถูกต้องตามบริบทและสะกดถูกต้อง</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-700">จุดที่ต้องแก้ไข (Areas to Improve):</p>
+                        <p id="ai-improvements" class="text-xs text-slate-600 mt-0.5">- สังเกตการใช้ Verb ช่อง 3 ในโครงสร้าง Present Perfect</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Gradebook with Room Filter & Export -->
+            <section id="sec-grades" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-square-poll-vertical text-indigo-600 mr-2"></i>รายงานและสมุดบันทึกคะแนนนักเรียน</h2>
+                        <p class="text-xs text-slate-500 mt-1">จัดการคะแนนรายบุคคล แยกตามห้องเรียน พร้อมส่งออกไฟล์ Excel</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <!-- Class Room Filter -->
+                        <select id="gradebook-room-filter" onchange="renderGradebook()" class="text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="ALL">แสดงทุกห้องเรียน</option>
+                            <option value="ม.2/1">เฉพาะห้อง ม.2/1</option>
+                            <option value="ม.2/2">เฉพาะห้อง ม.2/2</option>
+                            <option value="ม.2/3">เฉพาะห้อง ม.2/3</option>
+                        </select>
+                        
+                        <!-- Export CSV Button -->
+                        <button onclick="exportGradebookCSV()" class="px-3 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow flex items-center">
+                            <i class="fa-solid fa-file-excel mr-1.5"></i> ดาวน์โหลดคะแนน (CSV)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
+                                <th class="p-3">รหัสประจำตัว</th>
+                                <th class="p-3">ชื่อ - นามสกุล</th>
+                                <th class="p-3">ห้องเรียน</th>
+                                <th class="p-3">HW1 (10)</th>
+                                <th class="p-3">HW2 (10)</th>
+                                <th class="p-3">คะแนนรวม</th>
+                                <th class="p-3">สถานะ AI ตรวจ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradebook-table-body" class="divide-y divide-slate-100">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION: Modules -->
+            <section id="sec-modules" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>หน่วยการเรียนรู้และสื่อภายนอก</h2>
+                    <p class="text-xs text-slate-500 mt-1">บทเรียนภาษาอังกฤษ วิดีโอ และใบงานการเรียนรู้</p>
+                </div>
+
+                <div id="modules-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">Module 1</span>
+                        <h3 class="font-bold text-slate-800 text-sm">Present Perfect Tense Master</h3>
+                        <p class="text-xs text-slate-500">เรียนรู้หลักการใช้ Present Perfect ผ่านวิดีโอและใบงานโต้ตอบ</p>
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <a href="https://www.youtube.com" target="_blank" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-semibold flex items-center">
+                                <i class="fa-brands fa-youtube mr-1.5"></i> ดูคลิป YouTube
+                            </a>
+                            <a href="https://www.liveworksheets.com" target="_blank" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-xs font-semibold flex items-center">
+                                <i class="fa-solid fa-file-pen mr-1.5"></i> ทำใบงาน Liveworksheets
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Teacher Student Roster Management -->
+            <section id="sec-roster" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users-rectangle text-amber-600 mr-2"></i>นำเข้านักเรียนรายห้อง (สำหรับครู)</h2>
+                    <p class="text-xs text-slate-500 mt-1">เพิ่มรายชื่อนักเรียนและรหัสประจำตัวแยกตามห้องเรียน</p>
+                </div>
+
+                <form onsubmit="handleAddStudent(event)" class="space-y-4 max-w-xl bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัวนักเรียน</label>
+                            <input type="text" id="add-std-id" placeholder="เช่น 1002" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
+                            <input type="text" id="add-std-name" placeholder="เช่น ด.ญ. สมหญิง จริงใจ" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ห้องเรียน</label>
+                        <select id="add-std-room" class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                            <option value="ม.2/1">ม.2/1</option>
+                            <option value="ม.2/2">ม.2/2</option>
+                            <option value="ม.2/3">ม.2/3</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow">
+                        <i class="fa-solid fa-user-plus mr-1"></i> เพิ่มรายชื่อนักเรียน
+                    </button>
+                </form>
+            </section>
+
+            <!-- SECTION: Teacher Add Content -->
+            <section id="sec-add-content" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-folder-plus text-amber-600 mr-2"></i>เพิ่มบทเรียนและการบ้าน (ฝังลิงก์ภายนอก)</h2>
+                    <p class="text-xs text-slate-500 mt-1">สร้างเนื้อหาใหม่ และแปะลิงก์ YouTube, Liveworksheets หรือ Google Forms</p>
+                </div>
+
+                <form onsubmit="handleAddModule(event)" class="space-y-4 max-w-xl bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหัวข้อบทเรียน</label>
+                        <input type="text" id="mod-title" placeholder="เช่น Relative Clauses Master" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">คำอธิบาย</label>
+                        <textarea id="mod-desc" rows="2" placeholder="รายละเอียดบทเรียน..." class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">แปะลิงก์ภายนอก (YouTube / Liveworksheets / Google Forms)</label>
+                        <input type="url" id="mod-url" placeholder="https://www.youtube.com/watch?v=..." class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                    </div>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow">
+                        <i class="fa-solid fa-plus mr-1"></i> บันทึกบทเรียนใหม่
+                    </button>
+                </form>
+            </section>
+
+        </main>
     </div>
 
-  </main>
+    <!-- Application Script Logic -->
+    <script>
+        let currentUser = null;
+        let students = [
+            { id: "1001", name: "ด.ช. สมชาย สายเรียน", room: "ม.2/1", hw1: 8.5, hw2: 9.0 },
+            { id: "1002", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.2/1", hw1: 9.5, hw2: 8.5 },
+            { id: "1003", name: "ด.ช. กิตติศักดิ์ เรียนดี", room: "ม.2/2", hw1: 7.0, hw2: 8.0 },
+            { id: "1004", name: "ด.ญ. ปรียาภรณ์ ตั้งใจ", room: "ม.2/2", hw1: 10.0, hw2: 9.5 }
+        ];
 
-  <!-- MODAL 1: TEACHER OVERRIDE / REVIEW MODAL -->
-  <div id="teacherModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div>
-          <h3 class="font-display font-bold text-lg text-slate-900" id="modalStudentName">Student Evaluation Review</h3>
-          <p class="text-xs text-slate-500" id="modalAssignmentTitle">Topic</p>
-        </div>
-        <button onclick="closeTeacherModal()" class="text-slate-400 hover:text-slate-600 text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
+        function handleLogin(e) {
+            e.preventDefault();
+            const id = document.getElementById('login-id').value.trim();
+            const name = document.getElementById('login-name').value.trim();
+            const room = document.getElementById('login-room').value;
 
-      <!-- Student Answer Text -->
-      <div>
-        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Submitted Response</label>
-        <div id="modalStudentResponse" class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 leading-relaxed font-mono"></div>
-      </div>
+            if(id.toUpperCase() === 'TEACHER') {
+                currentUser = { id: 'TEACHER', name: name || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
+            } else {
+                currentUser = { id: id, name: name, room: room, isTeacher: false };
+                if(!students.find(s => s.id === id)) {
+                    students.push({ id: id, name: name, room: room, hw1: 0, hw2: 0 });
+                }
+            }
 
-      <!-- Editable Score & Feedback -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Score (out of 100)</label>
-          <input type="number" id="modalScoreInput" class="w-full p-2.5 rounded-xl border border-slate-300 font-bold text-slate-900">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Grade Status</label>
-          <select id="modalStatusSelect" class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-semibold">
-            <option value="AI Graded">AI Graded (Pending)</option>
-            <option value="Teacher Approved">Teacher Approved</option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Teacher Notes / Feedback</label>
-        <textarea id="modalFeedbackInput" rows="3" class="w-full p-3 rounded-xl border border-slate-300 text-xs leading-relaxed"></textarea>
-      </div>
-
-      <!-- Footer Buttons -->
-      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
-        <button onclick="closeTeacherModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50">Cancel</button>
-        <button onclick="saveTeacherOverride()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-md shadow-blue-500/20">
-          Approve & Save Changes
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: GEMINI API KEY CONFIGURATION MODAL -->
-  <div id="apiKeyModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-display font-bold text-base text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-key text-amber-500"></i> Gemini API Settings
-        </h3>
-        <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-slate-600 text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <p class="text-xs text-slate-600 leading-relaxed">
-        Enter your Gemini API Key to enable real-time AI homework grading. If left blank, the system uses a smart pre-configured AI simulator.
-      </p>
-
-      <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Gemini API Key</label>
-        <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full p-2.5 rounded-xl border border-slate-300 text-xs font-mono">
-      </div>
-
-      <div class="flex items-center justify-end gap-2 pt-2">
-        <button onclick="closeApiKeyModal()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600">Close</button>
-        <button onclick="saveApiKey()" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold">Save Key</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: PRACTICE MODULE MODAL -->
-  <div id="moduleModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-display font-bold text-base text-slate-900" id="moduleModalTitle">Module Practice</h3>
-        <button onclick="closeModuleModal()" class="text-slate-400 hover:text-slate-600 text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div id="moduleModalContent" class="space-y-3 text-xs text-slate-700">
-        <!-- Content injected dynamically -->
-      </div>
-
-      <div class="pt-2 flex justify-end">
-        <button onclick="closeModuleModal()" class="px-5 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold">Got it!</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 4: CREATE ASSIGNMENT MODAL -->
-  <div id="createAssignmentModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="font-display font-bold text-base text-slate-900">Create New Assignment</h3>
-        <button onclick="closeCreateAssignmentModal()" class="text-slate-400 hover:text-slate-600 text-lg">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Assignment Title</label>
-          <input type="text" id="newAssignTitle" placeholder="e.g. My Favorite Holiday Experience" class="w-full p-2.5 rounded-xl border border-slate-300">
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Prompt / Instructions</label>
-          <textarea id="newAssignPrompt" rows="3" placeholder="Write 100-150 words about..." class="w-full p-2.5 rounded-xl border border-slate-300"></textarea>
-        </div>
-      </div>
-
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeCreateAssignmentModal()" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600">Cancel</button>
-        <button onclick="saveNewAssignment()" class="px-5 py-2 bg-blue-600 text-white rounded-xl text-xs font-semibold">Publish Assignment</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-      <p>© 2026 English Learning Vibe • Interactive AI Secondary English Engine</p>
-    </div>
-  </footer>
-
-  <!-- JavaScript Application Logic -->
-  <script>
-    // ==========================================
-    // INITIAL DATA & APP STATE
-    // ==========================================
-    let currentRole = 'student'; // 'student' or 'teacher'
-    let geminiApiKey = '';
-
-    // Sample Assignments Data
-    let assignments = [
-      {
-        id: 'assign1',
-        title: 'Essay: My Dream Career & Future Goals',
-        prompt: 'Write 3 to 5 sentences describing what job you want to do in the future and explain why. Use at least two transition words (e.g. Furthermore, In addition).'
-      },
-      {
-        id: 'assign2',
-        title: 'Grammar Exercise: Environmental Protection',
-        prompt: 'Write 3 sentences using Passive Voice to describe actions being taken to protect the planet (e.g. "Trees are planted...").'
-      },
-      {
-        id: 'assign3',
-        title: 'Reading Reflection: Technology in School',
-        prompt: 'Do you think smartphones should be allowed in high school classrooms? State your opinion with two reasons.'
-      }
-    ];
-
-    // Mock/Saved Submissions for 250+ Students Simulation
-    let submissions = [
-      {
-        id: 'sub_1',
-        studentName: 'Somchai Jaidee (M.4/1)',
-        assignmentId: 'assign1',
-        assignmentTitle: 'Essay: My Dream Career & Future Goals',
-        responseText: 'In the future, I want to become a software engineer. Because I like build apps. In addition, software engineers is earning good salary.',
-        score: 78,
-        status: 'AI Graded',
-        primaryTag: 'Subject-Verb Agreement',
-        feedback: 'Good overall effort Somchai! Watch out for subject-verb agreement with plural nouns like "engineers".',
-        rubrics: { grammar: 70, vocabulary: 80, relevance: 85, coherence: 75 },
-        corrections: [
-          { original: 'software engineers is earning', corrected: 'software engineers are earning', reason: 'Plural subject "engineers" requires plural verb "are".' },
-          { original: 'Because I like build apps', corrected: 'Because I like building apps', reason: 'Use gerund (-ing) after verb "like".' }
-        ],
-        recommendedPractice: 'Subject-Verb Agreement & Gerunds after preference verbs.'
-      },
-      {
-        id: 'sub_2',
-        studentName: 'Somsri Rakเรียน (M.4/2)',
-        assignmentId: 'assign2',
-        assignmentTitle: 'Grammar Exercise: Environmental Protection',
-        responseText: 'Plastic bottles are recycled every day by people. Many trees were planted last week in our school.',
-        score: 95,
-        status: 'Teacher Approved',
-        primaryTag: 'Excellent Passive Voice',
-        feedback: 'Excellent passive voice structures! Accurate tense usage.',
-        rubrics: { grammar: 98, vocabulary: 92, relevance: 95, coherence: 95 },
-        corrections: [],
-        recommendedPractice: 'Advanced passive voice with modal verbs.'
-      },
-      {
-        id: 'sub_3',
-        studentName: 'Nipon Wong (M.5/1)',
-        assignmentId: 'assign1',
-        assignmentTitle: 'Essay: My Dream Career & Future Goals',
-        responseText: 'I want to be doctor. I study hard for pass exam.',
-        score: 65,
-        status: 'AI Graded',
-        primaryTag: 'Missing Articles & Infinitive',
-        feedback: 'Keep trying Nipon! Remember to use articles (a/an) before singular countable jobs.',
-        rubrics: { grammar: 60, vocabulary: 65, relevance: 75, coherence: 60 },
-        corrections: [
-          { original: 'want to be doctor', corrected: 'want to be a doctor', reason: 'Singular noun requires article "a".' },
-          { original: 'study hard for pass', corrected: 'study hard to pass', reason: 'Use "to + infinitive" to express purpose.' }
-        ],
-        recommendedPractice: 'Articles (A/An/The) and Infinitive of Purpose.'
-      }
-    ];
-
-    let currentEditingSubId = null;
-
-    // ==========================================
-    // INIT ON LOAD
-    // ==========================================
-    window.onload = function() {
-      populateAssignmentSelect();
-      renderStudentHistory();
-      renderTeacherTable();
-      updateTeacherStats();
-    };
-
-    // ==========================================
-    // ROLE SWITCHER
-    // ==========================================
-    function switchRole(role) {
-      currentRole = role;
-      const studentBtn = document.getElementById('btnStudentRole');
-      const teacherBtn = document.getElementById('btnTeacherRole');
-      const studentView = document.getElementById('studentView');
-      const teacherView = document.getElementById('teacherView');
-
-      if (role === 'student') {
-        studentBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm";
-        teacherBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all";
-        studentView.classList.remove('hidden');
-        teacherView.classList.add('hidden');
-      } else {
-        teacherBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white text-blue-600 shadow-sm";
-        studentBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all";
-        teacherView.classList.remove('hidden');
-        studentView.classList.add('hidden');
-        renderTeacherTable();
-        updateTeacherStats();
-      }
-    }
-
-    // ==========================================
-    // STUDENT TABS NAVIGATION
-    // ==========================================
-    function switchStudentTab(tab) {
-      const tabSubmit = document.getElementById('studentTabSubmit');
-      const tabHistory = document.getElementById('studentTabHistory');
-      const tabModules = document.getElementById('studentTabModules');
-
-      const btnSubmit = document.getElementById('tabBtnSubmit');
-      const btnHistory = document.getElementById('tabBtnHistory');
-      const btnModules = document.getElementById('tabBtnModules');
-
-      // Reset styles
-      [btnSubmit, btnHistory, btnModules].forEach(btn => {
-        btn.className = "py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-2";
-      });
-
-      tabSubmit.classList.add('hidden');
-      tabHistory.classList.add('hidden');
-      tabModules.classList.add('hidden');
-
-      if (tab === 'submit') {
-        tabSubmit.classList.remove('hidden');
-        btnSubmit.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
-      } else if (tab === 'history') {
-        tabHistory.classList.remove('hidden');
-        btnHistory.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
-        renderStudentHistory();
-      } else if (tab === 'modules') {
-        tabModules.classList.remove('hidden');
-        btnModules.className = "py-3 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 font-bold";
-      }
-    }
-
-    // ==========================================
-    // ASSIGNMENT SELECT & FORM LOGIC
-    // ==========================================
-    function populateAssignmentSelect() {
-      const select = document.getElementById('assignmentSelect');
-      select.innerHTML = '';
-      assignments.forEach(assign => {
-        const opt = document.createElement('option');
-        opt.value = assign.id;
-        opt.textContent = assign.title;
-        select.appendChild(opt);
-      });
-      onAssignmentSelectChange();
-    }
-
-    function onAssignmentSelectChange() {
-      const selectVal = document.getElementById('assignmentSelect').value;
-      const assign = assignments.find(a => a.id === selectVal);
-      if (assign) {
-        document.getElementById('promptTitle').textContent = assign.title;
-        document.getElementById('promptText').textContent = assign.prompt;
-      }
-    }
-
-    function updateWordCount() {
-      const text = document.getElementById('studentTextarea').value.trim();
-      const count = text ? text.split(/\s+/).length : 0;
-      document.getElementById('wordCountBadge').textContent = `${count} words`;
-    }
-
-    function loadSampleText() {
-      const selectVal = document.getElementById('assignmentSelect').value;
-      if (selectVal === 'assign1') {
-        document.getElementById('studentTextarea').value = "In the future, I want to become an pilot. Because I love traveling to many countries. Furthermore, pilots is responsible for safety.";
-      } else if (selectVal === 'assign2') {
-        document.getElementById('studentTextarea').value = "Plastic trash are collected by students every Friday. Trees is planted to make air fresh.";
-      } else {
-        document.getElementById('studentTextarea').value = "I think smartphones should allowed in class because students can search vocabulary fastly.";
-      }
-      updateWordCount();
-    }
-
-    // ==========================================
-    // GEMINI AI EVALUATION ENGINE
-    // ==========================================
-    async function handleHomeworkSubmit(event) {
-      event.preventDefault();
-
-      const text = document.getElementById('studentTextarea').value.trim();
-      if (!text) return;
-
-      const assignId = document.getElementById('assignmentSelect').value;
-      const assignObj = assignments.find(a => a.id === assignId);
-
-      // UI Loading state
-      document.getElementById('aiPlaceholder').classList.add('hidden');
-      document.getElementById('aiEvaluationOutput').classList.add('hidden');
-      document.getElementById('aiLoading').classList.remove('hidden');
-
-      let evalResult = null;
-
-      if (geminiApiKey) {
-        // Real Gemini API Call
-        try {
-          evalResult = await callGeminiAPI(assignObj.prompt, text);
-        } catch (err) {
-          console.warn('Gemini API Call failed, falling back to smart engine', err);
-          evalResult = generateSmartFallbackResult(text);
+            document.getElementById('auth-screen').classList.add('hidden');
+            updateUIState();
         }
-      } else {
-        // Smart Local AI Simulator delay simulation
-        await new Promise(r => setTimeout(r, 1200));
-        evalResult = generateSmartFallbackResult(text);
-      }
 
-      // Hide Loading & Render Output
-      document.getElementById('aiLoading').classList.add('hidden');
-      document.getElementById('aiEvaluationOutput').classList.remove('hidden');
-
-      renderEvaluationResult(evalResult);
-
-      // Save to global submissions
-      const newSub = {
-        id: 'sub_' + Date.now(),
-        studentName: 'Alex Student (You)',
-        assignmentId: assignId,
-        assignmentTitle: assignObj.title,
-        responseText: text,
-        score: evalResult.score,
-        status: 'AI Graded',
-        primaryTag: evalResult.corrections.length > 0 ? evalResult.corrections[0].reason.split(' ')[0] : 'Grammar Correct',
-        feedback: evalResult.feedback,
-        rubrics: evalResult.rubrics,
-        corrections: evalResult.corrections,
-        recommendedPractice: evalResult.recommendedPractice
-      };
-
-      submissions.unshift(newSub);
-    }
-
-    // Call Gemini API Function
-    async function callGeminiAPI(promptGuidelines, studentText) {
-      const systemInstruction = `
-        You are an encouraging, empathetic high school English teacher evaluating secondary students (CEFR A2-B1 level).
-        Evaluate the student submission based on:
-        1. Score out of 100
-        2. Rubrics (Grammar, Vocabulary, Relevance, Coherence out of 100)
-        3. Friendly teacher feedback
-        4. Specific grammar/spelling corrections (Original -> Corrected + Reason)
-        5. Recommended practice grammar points.
-
-        Return ONLY a raw JSON object matching this structure:
-        {
-          "score": 85,
-          "grade": "Grade A",
-          "feedback": "Encouraging comment...",
-          "rubrics": { "grammar": 80, "vocabulary": 85, "relevance": 90, "coherence": 85 },
-          "corrections": [
-            { "original": "wrong text", "corrected": "fixed text", "reason": "Grammar rule explanation" }
-          ],
-          "recommendedPractice": "Focus topic..."
+        function handleLogout() {
+            currentUser = null;
+            document.getElementById('auth-screen').classList.remove('hidden');
         }
-      `;
 
-      const userPrompt = `
-        Assignment Guidelines: "${promptGuidelines}"
-        Student Writing: "${studentText}"
-      `;
+        function updateUIState() {
+            if(!currentUser) return;
 
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`;
+            document.getElementById('nav-user-name').innerText = currentUser.name;
+            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'คุณครูผู้สอน' : `นักเรียน ${currentUser.room} (รหัส ${currentUser.id})`;
 
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: userPrompt }] }],
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      });
+            const teacherMenu = document.getElementById('teacher-menu');
+            if(currentUser.isTeacher) {
+                teacherMenu.classList.remove('hidden');
+            } else {
+                teacherMenu.classList.add('hidden');
+            }
 
-      const data = await response.json();
-      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      return JSON.parse(rawText);
-    }
+            renderGradebook();
+            showSection('dashboard');
+        }
 
-    // Smart Local Fallback Evaluator
-    function generateSmartFallbackResult(text) {
-      let corrections = [];
-      let score = 88;
+        function showSection(secId) {
+            ['dashboard', 'submit', 'grades', 'modules', 'roster', 'add-content'].forEach(id => {
+                const el = document.getElementById('sec-' + id);
+                if(el) el.classList.add('hidden');
+            });
+            const target = document.getElementById('sec-' + secId);
+            if(target) target.classList.remove('hidden');
+        }
 
-      if (text.includes("is earning") || text.includes("pilots is") || text.includes("trees is")) {
-        corrections.push({
-          original: "pilots is / trees is",
-          corrected: "pilots are / trees are",
-          reason: "Plural subject requires plural verb 'are'."
-        });
-        score -= 8;
-      }
+        function handleAssignmentSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-hw');
+            btn.innerHTML = '<span>กำลังส่งงานและให้ AI วิเคราะห์...</span> <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
 
-      if (text.includes("become an pilot") || text.includes("want to be doctor")) {
-        corrections.push({
-          original: "an pilot / be doctor",
-          corrected: "a pilot / be a doctor",
-          reason: "Use 'a' before consonant sounds."
-        });
-        score -= 6;
-      }
+            setTimeout(() => {
+                btn.innerHTML = '<span>ส่งงานและให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>';
+                document.getElementById('ai-result-box').classList.remove('hidden');
+                
+                // Update score for current student
+                const std = students.find(s => s.id === currentUser.id);
+                if(std) std.hw1 = 8.5;
+                renderGradebook();
 
-      if (text.includes("fastly")) {
-        corrections.push({
-          original: "fastly",
-          corrected: "fast / quickly",
-          reason: "'Fast' is both an adjective and an adverb."
-        });
-        score -= 5;
-      }
+                alert('ส่งงานเรียบร้อยแล้ว! AI ได้ทำการตรวจและประเมินคะแนนแล้วครับ');
+            }, 1200);
+        }
 
-      if (corrections.length === 0) {
-        corrections.push({
-          original: "Overall style",
-          corrected: "Consider adding complex sentences",
-          reason: "Great grammar! Try using more connectors like 'Furthermore'."
-        });
-      }
+        function renderGradebook() {
+            const filterRoom = document.getElementById('gradebook-room-filter').value;
+            const tbody = document.getElementById('gradebook-table-body');
+            
+            const filteredStudents = (filterRoom === 'ALL') 
+                ? students 
+                : students.filter(s => s.room === filterRoom);
 
-      return {
-        score: Math.max(score, 65),
-        grade: score >= 80 ? 'Grade A' : 'Grade B',
-        feedback: "Great job completing your assignment! Your ideas are clear and well-organized. Keep refining your grammar points!",
-        rubrics: {
-          grammar: Math.max(score - 5, 60),
-          vocabulary: score,
-          relevance: 90,
-          coherence: 85
-        },
-        corrections: corrections,
-        recommendedPractice: "Subject-Verb Agreement and Article Usage (A/An)."
-      };
-    }
+            tbody.innerHTML = filteredStudents.map(s => {
+                const total = (s.hw1 || 0) + (s.hw2 || 0);
+                return `
+                    <tr>
+                        <td class="p-3 font-mono font-bold">${s.id}</td>
+                        <td class="p-3 font-semibold text-slate-800">${s.name}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-lg text-[10px] font-bold">${s.room}</span></td>
+                        <td class="p-3 font-medium">${s.hw1 || '-'}</td>
+                        <td class="p-3 font-medium">${s.hw2 || '-'}</td>
+                        <td class="p-3 font-bold text-indigo-600">${total.toFixed(1)} คะแนน</td>
+                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold">ตรวจแล้ว</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
 
-    // Render Evaluation Card
-    function renderEvaluationResult(res) {
-      document.getElementById('outputScore').textContent = `${res.score}/100`;
-      document.getElementById('outputFeedback').textContent = `"${res.feedback}"`;
-      document.getElementById('recommendedPracticeText').textContent = res.recommendedPractice;
+        function exportGradebookCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,HW1,HW2,คะแนนรวม\n";
 
-      // Rubrics
-      const rubricGrid = document.getElementById('rubricBreakdownGrid');
-      rubricGrid.innerHTML = `
-        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
-          <span class="text-slate-600 font-medium">Grammar</span>
-          <span class="font-bold text-slate-800">${res.rubrics.grammar}%</span>
-        </div>
-        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
-          <span class="text-slate-600 font-medium">Vocabulary</span>
-          <span class="font-bold text-slate-800">${res.rubrics.vocabulary}%</span>
-        </div>
-        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
-          <span class="text-slate-600 font-medium">Relevance</span>
-          <span class="font-bold text-slate-800">${res.rubrics.relevance}%</span>
-        </div>
-        <div class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex justify-between">
-          <span class="text-slate-600 font-medium">Coherence</span>
-          <span class="font-bold text-slate-800">${res.rubrics.coherence}%</span>
-        </div>
-      `;
+            students.forEach(s => {
+                const total = (s.hw1 || 0) + (s.hw2 || 0);
+                csvContent += `${s.id},${s.name},${s.room},${s.hw1 || 0},${s.hw2 || 0},${total.toFixed(1)}\n`;
+            });
 
-      // Corrections
-      const list = document.getElementById('correctionsList');
-      list.innerHTML = '';
-      if (res.corrections.length === 0) {
-        list.innerHTML = '<p class="text-xs text-emerald-600 font-semibold">No critical errors found! Excellent work.</p>';
-      } else {
-        res.corrections.forEach(c => {
-          const div = document.createElement('div');
-          div.className = "p-2.5 bg-red-50/50 border border-red-100 rounded-xl space-y-1 text-xs";
-          div.innerHTML = `
-            <div class="flex items-center gap-1.5 font-bold">
-              <span class="line-through text-red-500">${c.original}</span>
-              <i class="fa-solid fa-arrow-right text-slate-400 text-[10px]"></i>
-              <span class="text-emerald-700">${c.corrected}</span>
-            </div>
-            <p class="text-[11px] text-slate-600">${c.reason}</p>
-          `;
-          list.appendChild(div);
-        });
-      }
-    }
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "student_scores.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
-    // ==========================================
-    // RENDER TABLES & HISTORY
-    // ==========================================
-    function renderStudentHistory() {
-      const tbody = document.getElementById('studentHistoryTableBody');
-      tbody.innerHTML = '';
+        function handleAddStudent(e) {
+            e.preventDefault();
+            const id = document.getElementById('add-std-id').value.trim();
+            const name = document.getElementById('add-std-name').value.trim();
+            const room = document.getElementById('add-std-room').value;
 
-      submissions.forEach(sub => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50/80 transition";
-        tr.innerHTML = `
-          <td class="p-3 font-semibold text-slate-800">${sub.assignmentTitle}</td>
-          <td class="p-3 text-xs text-slate-500">Today</td>
-          <td class="p-3"><span class="font-bold ${sub.score >= 80 ? 'text-emerald-600' : 'text-blue-600'}">${sub.score}/100</span></td>
-          <td class="p-3">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${sub.status === 'Teacher Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}">
-              ${sub.status}
-            </span>
-          </td>
-          <td class="p-3 text-right">
-            <button onclick="viewSubDetail('${sub.id}')" class="text-xs font-semibold text-blue-600 hover:underline">View Details</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+            students.push({ id, name, room, hw1: 0, hw2: 0 });
+            alert(`เพิ่มนักเรียน ${name} (${room}) เรียบร้อยแล้ว`);
+            document.getElementById('add-std-id').value = '';
+            document.getElementById('add-std-name').value = '';
+            renderGradebook();
+        }
 
-    function renderTeacherTable() {
-      const tbody = document.getElementById('teacherTableBody');
-      tbody.innerHTML = '';
+        function handleAddModule(e) {
+            e.preventDefault();
+            const title = document.getElementById('mod-title').value;
+            const desc = document.getElementById('mod-desc').value;
+            const url = document.getElementById('mod-url').value;
 
-      const filterText = document.getElementById('teacherSearchInput').value.toLowerCase();
-      const statusFilter = document.getElementById('teacherStatusFilter').value;
-
-      const filtered = submissions.filter(s => {
-        const matchesText = s.studentName.toLowerCase().includes(filterText) || s.assignmentTitle.toLowerCase().includes(filterText);
-        const matchesStatus = statusFilter === 'ALL' || s.status === statusFilter;
-        return matchesText && matchesStatus;
-      });
-
-      filtered.forEach(s => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-50 transition";
-        tr.innerHTML = `
-          <td class="p-3 font-bold text-slate-800">${s.studentName}</td>
-          <td class="p-3 text-slate-600 text-xs">${s.assignmentTitle}</td>
-          <td class="p-3 font-black text-slate-900">${s.score}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-xs">${s.primaryTag}</span></td>
-          <td class="p-3">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${s.status === 'Teacher Approved' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">
-              ${s.status}
-            </span>
-          </td>
-          <td class="p-3 text-right">
-            <button onclick="openTeacherModal('${s.id}')" class="px-3 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-medium">
-              Review / Override
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function filterTeacherTable() {
-      renderTeacherTable();
-    }
-
-    function updateTeacherStats() {
-      document.getElementById('statTotalSubmissions').textContent = 245 + submissions.length;
-      
-      const sum = submissions.reduce((acc, curr) => acc + curr.score, 0);
-      const avg = (sum / submissions.length).toFixed(1);
-      document.getElementById('statClassAverage').textContent = `${avg}%`;
-
-      const pending = submissions.filter(s => s.status === 'AI Graded').length;
-      document.getElementById('statPendingReview').textContent = pending;
-    }
-
-    // ==========================================
-    // TEACHER OVERRIDE MODAL ACTIONS
-    // ==========================================
-    function openTeacherModal(subId) {
-      currentEditingSubId = subId;
-      const sub = submissions.find(s => s.id === subId);
-      if (!sub) return;
-
-      document.getElementById('modalStudentName').textContent = `Reviewing: ${sub.studentName}`;
-      document.getElementById('modalAssignmentTitle').textContent = sub.assignmentTitle;
-      document.getElementById('modalStudentResponse').textContent = sub.responseText;
-      document.getElementById('modalScoreInput').value = sub.score;
-      document.getElementById('modalStatusSelect').value = sub.status;
-      document.getElementById('modalFeedbackInput').value = sub.feedback;
-
-      document.getElementById('teacherModal').classList.remove('hidden');
-    }
-
-    function closeTeacherModal() {
-      document.getElementById('teacherModal').classList.add('hidden');
-    }
-
-    function saveTeacherOverride() {
-      const sub = submissions.find(s => s.id === currentEditingSubId);
-      if (sub) {
-        sub.score = parseInt(document.getElementById('modalScoreInput').value, 10);
-        sub.status = document.getElementById('modalStatusSelect').value;
-        sub.feedback = document.getElementById('modalFeedbackInput').value;
-      }
-
-      closeTeacherModal();
-      renderTeacherTable();
-      updateTeacherStats();
-    }
-
-    // ==========================================
-    // API KEY MODAL
-    // ==========================================
-    function openApiKeyModal() {
-      document.getElementById('apiKeyModal').classList.remove('hidden');
-    }
-
-    function closeApiKeyModal() {
-      document.getElementById('apiKeyModal').classList.add('hidden');
-    }
-
-    function saveApiKey() {
-      const val = document.getElementById('apiKeyInput').value.trim();
-      geminiApiKey = val;
-      const badgeText = document.getElementById('apiKeyStatusText');
-      
-      if (val) {
-        badgeText.textContent = "Gemini API Active";
-        document.getElementById('apiKeyBadge').className = "hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
-      } else {
-        badgeText.textContent = "Demo API Mode";
-        document.getElementById('apiKeyBadge').className = "hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200";
-      }
-      closeApiKeyModal();
-    }
-
-    // ==========================================
-    // LEARNING MODULES MODAL
-    // ==========================================
-    function openModuleModal(type) {
-      const modal = document.getElementById('moduleModal');
-      const title = document.getElementById('moduleModalTitle');
-      const content = document.getElementById('moduleModalContent');
-
-      if (type === 'active_passive') {
-        title.textContent = "Active vs Passive Voice Key";
-        content.innerHTML = `
-          <p class="font-bold text-slate-800">Rule Summary:</p>
-          <p>• <strong>Active:</strong> Subject + Verb + Object (e.g. "The teacher explains the lesson.")</p>
-          <p>• <strong>Passive:</strong> Object + Be + Past Participle (V.3) + (by Subject) (e.g. "The lesson is explained by the teacher.")</p>
-          <div class="p-3 bg-blue-50 rounded-xl mt-2 font-mono">
-            Quick Practice: "Students write essays" ➔ "Essays are written by students."
-          </div>
-        `;
-      } else if (type === 'conditionals') {
-        title.textContent = "Conditionals Overview";
-        content.innerHTML = `
-          <p class="font-bold text-slate-800">1st Conditional (Real Future):</p>
-          <p>• <strong>Structure:</strong> If + Present Simple, Will + V.1</p>
-          <p>• <strong>Example:</strong> If I study hard, I will pass the exam.</p>
-        `;
-      } else {
-        title.textContent = "Transitions Cheat Sheet";
-        content.innerHTML = `
-          <p class="font-bold text-slate-800">Addition Connectors:</p>
-          <p>• Furthermore, In addition, Moreover</p>
-          <p class="font-bold text-slate-800 mt-2">Contrast Connectors:</p>
-          <p>• However, In contrast, On the other hand</p>
-        `;
-      }
-
-      modal.classList.remove('hidden');
-    }
-
-    function closeModuleModal() {
-      document.getElementById('moduleModal').classList.add('hidden');
-    }
-
-    // ==========================================
-    // CREATE ASSIGNMENT MODAL
-    // ==========================================
-    function openCreateAssignmentModal() {
-      document.getElementById('createAssignmentModal').classList.remove('hidden');
-    }
-
-    function closeCreateAssignmentModal() {
-      document.getElementById('createAssignmentModal').classList.add('hidden');
-    }
-
-    function saveNewAssignment() {
-      const title = document.getElementById('newAssignTitle').value.trim();
-      const prompt = document.getElementById('newAssignPrompt').value.trim();
-
-      if (!title || !prompt) return;
-
-      const newId = 'assign_' + Date.now();
-      assignments.push({ id: newId, title, prompt });
-      populateAssignmentSelect();
-      closeCreateAssignmentModal();
-      alert("New Assignment published successfully!");
-    }
-
-    // CMS Settings
-    function saveCmsSettings() {
-      const title = document.getElementById('cmsTitleInput').value;
-      const sub = document.getElementById('cmsSubInput').value;
-
-      document.getElementById('appHeaderTitle').textContent = title;
-      document.getElementById('appHeaderSubtitle').textContent = sub;
-      alert("Site settings updated!");
-    }
-
-    function viewSubDetail(id) {
-      switchStudentTab('submit');
-      const sub = submissions.find(s => s.id === id);
-      if (sub) {
-        document.getElementById('studentTextarea').value = sub.responseText;
-        document.getElementById('assignmentSelect').value = sub.assignmentId;
-        onAssignmentSelectChange();
-        renderEvaluationResult(sub);
-        document.getElementById('aiPlaceholder').classList.add('hidden');
-        document.getElementById('aiEvaluationOutput').classList.remove('hidden');
-      }
-    }
-  </script>
+            const list = document.getElementById('modules-list');
+            const card = document.createElement('div');
+            card.className = "p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3";
+            card.innerHTML = `
+                <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">New Module</span>
+                <h3 class="font-bold text-slate-800 text-sm">${title}</h3>
+                <p class="text-xs text-slate-500">${desc}</p>
+                ${url ? `<a href="${url}" target="_blank" class="inline-block px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-semibold"><i class="fa-solid fa-link mr-1"></i> เปิดสื่อการเรียนรู้</a>` : ''}
+            `;
+            list.appendChild(card);
+            alert('บันทึกบทเรียนเรียบร้อยแล้ว!');
+            showSection('modules');
+        }
+    </script>
 </body>
 </html>
