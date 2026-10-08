@@ -7,7 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Kanit', sans-serif; } </style>
+    <style> 
+        body { font-family: 'Kanit', sans-serif; } 
+        @media print {
+            header, aside, button, select, .no-print { display: none !important; }
+            main { border: none !important; shadow: none !important; padding: 0 !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
@@ -104,7 +111,7 @@
         <!-- Main Workspace -->
         <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 min-h-[550px]">
             
-            <!-- SECTION 1: Classrooms Hub (Icons for Teacher to Manage & View HW) -->
+            <!-- SECTION 1: Classrooms Hub -->
             <section id="sec-classrooms" class="space-y-6">
                 <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
@@ -112,7 +119,6 @@
                         <p class="text-xs text-slate-500 mt-1">คลิกที่การ์ดไอคอนห้องเรียนเพื่อดูการบ้านและตรวจการส่งงานของนักเรียนในห้องนั้น</p>
                     </div>
                     
-                    <!-- Create & Delete Room Buttons -->
                     <div class="flex items-center space-x-2">
                         <input type="text" id="input-new-room" placeholder="ชื่อห้อง เช่น ม.2/1" class="text-xs p-2 rounded-xl border border-slate-300 outline-none">
                         <button onclick="handleCreateRoom()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold">
@@ -146,7 +152,7 @@
                     </button>
                 </div>
 
-                <!-- Classroom Detail View Modal/Panel -->
+                <!-- Classroom Detail View Panel -->
                 <div id="room-detail-panel" class="hidden p-5 bg-indigo-50/50 rounded-2xl border border-indigo-200 space-y-4">
                     <div class="flex justify-between items-center border-b border-indigo-200 pb-3">
                         <h3 id="panel-room-title" class="font-bold text-indigo-900 text-base">รายละเอียดห้องเรียน -</h3>
@@ -161,9 +167,9 @@
                         </div>
                     </div>
 
-                    <!-- Room Student Submissions -->
+                    <!-- Room Student Submissions with Individual Delete Option -->
                     <div>
-                        <h4 class="font-bold text-xs text-slate-700 mb-2"><i class="fa-solid fa-users text-indigo-600 mr-1"></i>ติดตามการส่งงานของนักเรียนในห้อง:</h4>
+                        <h4 class="font-bold text-xs text-slate-700 mb-2"><i class="fa-solid fa-users text-indigo-600 mr-1"></i>ติดตามการส่งงานและจัดการรายชื่อนักเรียน:</h4>
                         <div class="overflow-x-auto bg-white rounded-xl border border-indigo-100">
                             <table class="w-full text-left text-xs">
                                 <thead>
@@ -172,6 +178,7 @@
                                         <th class="p-2.5">ชื่อ - นามสกุล</th>
                                         <th class="p-2.5">สถานะการส่งงาน</th>
                                         <th class="p-2.5">คะแนนรวม</th>
+                                        <th class="p-2.5 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="panel-student-table" class="divide-y divide-slate-100">
@@ -195,7 +202,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: Submit Assignment (NO TEXT BOX) -->
+            <!-- SECTION 3: Submit Assignment -->
             <section id="sec-submit" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
                     <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งการบ้านออนไลน์ (ถ่ายภาพ/แนบไฟล์)</h2>
@@ -235,16 +242,29 @@
                 </div>
             </section>
 
-            <!-- SECTION 4: Gradebook -->
+            <!-- SECTION 4: Gradebook with Export to Excel & Print/PDF -->
             <section id="sec-grades" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-square-poll-vertical text-indigo-600 mr-2"></i>สมุดบันทึกคะแนนรวม</h2>
                         <p class="text-xs text-slate-500 mt-1">สรุปการส่งงานและคะแนนของนักเรียนทุกคน</p>
                     </div>
-                    <select id="gradebook-filter" onchange="renderGradebook()" class="text-xs font-bold p-2.5 rounded-xl border border-slate-200 bg-slate-50">
-                        <!-- Rooms -->
-                    </select>
+                    
+                    <div class="flex flex-wrap items-center gap-2">
+                        <select id="gradebook-filter" onchange="renderGradebook()" class="text-xs font-bold p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                            <!-- Rooms -->
+                        </select>
+                        
+                        <!-- Export CSV / Excel Button -->
+                        <button onclick="exportToCSV()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow flex items-center">
+                            <i class="fa-solid fa-file-excel mr-1.5"></i> ดาวน์โหลด CSV / Excel
+                        </button>
+                        
+                        <!-- Print / PDF Button -->
+                        <button onclick="printGradebook()" class="px-3 py-2 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow flex items-center">
+                            <i class="fa-solid fa-print mr-1.5"></i> พิมพ์ / โหลด PDF
+                        </button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -256,6 +276,7 @@
                                 <th class="p-3">ห้องเรียน</th>
                                 <th class="p-3">งานที่ส่งแล้ว</th>
                                 <th class="p-3">คะแนนรวม</th>
+                                <th class="p-3 text-center no-print">จัดการ</th>
                             </tr>
                         </thead>
                         <tbody id="gradebook-tbody" class="divide-y divide-slate-100">
@@ -466,7 +487,9 @@
             }
         }
 
+        let currentActiveRoom = '';
         function openRoomDetail(roomName) {
+            currentActiveRoom = roomName;
             const panel = document.getElementById('room-detail-panel');
             document.getElementById('panel-room-title').innerText = `รายละเอียดห้องเรียน - ${roomName}`;
 
@@ -477,7 +500,14 @@
                 ? roomHW.map(a => `<p class="p-2 bg-white rounded-lg border border-indigo-100 font-medium"><i class="fa-solid fa-check text-emerald-500 mr-1.5"></i> ${a.title}</p>`).join('')
                 : `<p class="text-slate-400">ยังไม่มีการบ้านที่สั่งในห้องนี้</p>`;
 
-            // List Students
+            renderRoomStudentsTable(roomName);
+
+            panel.classList.remove('hidden');
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Render Room Student List with Delete Individual Button
+        function renderRoomStudentsTable(roomName) {
             const roomStds = students.filter(s => s.room === roomName);
             const stdTable = document.getElementById('panel-student-table');
             stdTable.innerHTML = roomStds.length > 0 
@@ -487,12 +517,25 @@
                         <td class="p-2.5 font-semibold text-slate-800">${s.name}</td>
                         <td class="p-2.5">${s.submittedCount > 0 ? `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-bold">ส่งแล้ว ${s.submittedCount} งาน</span>` : `<span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-bold">ยังไม่ส่ง</span>`}</td>
                         <td class="p-2.5 font-bold text-indigo-600">${s.totalScore} คะแนน</td>
+                        <td class="p-2.5 text-center">
+                            <button onclick="deleteStudent('${s.id}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
                     </tr>
                 `).join('')
-                : `<tr><td colspan="4" class="p-4 text-center text-slate-400">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>`;
+                : `<tr><td colspan="5" class="p-4 text-center text-slate-400">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>`;
+        }
 
-            panel.classList.remove('hidden');
-            panel.scrollIntoView({ behavior: 'smooth' });
+        // Delete Individual Student Function
+        function deleteStudent(studentId) {
+            const std = students.find(s => s.id === studentId);
+            if(std && confirm(`คุณครูต้องการลบ "${std.name}" (รหัส ${std.id}) ออกจากระบบใช่หรือไม่?`)) {
+                students = students.filter(s => s.id !== studentId);
+                if(currentActiveRoom) renderRoomStudentsTable(currentActiveRoom);
+                renderClassroomCards();
+                renderGradebook();
+            }
         }
 
         function closeRoomDetail() {
@@ -617,8 +660,40 @@
                     <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-lg text-[10px] font-bold">${s.room}</span></td>
                     <td class="p-3">${s.submittedCount} งาน</td>
                     <td class="p-3 font-bold text-emerald-600">${s.totalScore} คะแนน</td>
+                    <td class="p-3 text-center no-print">
+                        <button onclick="deleteStudent('${s.id}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
                 </tr>
             `).join('');
+        }
+
+        // Export Gradebook to Excel / CSV with UTF-8 BOM (Thai Character Safe)
+        function exportToCSV() {
+            const filterRoom = document.getElementById('gradebook-filter').value;
+            const filteredStudents = (filterRoom === 'ALL') ? students : students.filter(s => s.room === filterRoom);
+
+            let csv = "\uFEFF"; // UTF-8 BOM
+            csv += "รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,งานที่ส่งแล้ว(ชิ้น),คะแนนรวม\n";
+
+            filteredStudents.forEach(s => {
+                csv += `"${s.id}","${s.name}","${s.room}","${s.submittedCount}","${s.totalScore}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `รายงานคะแนน_${filterRoom === 'ALL' ? 'ทุกห้อง' : filterRoom}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Print or Save as PDF
+        function printGradebook() {
+            window.print();
         }
     </script>
 </body>
