@@ -7,9 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Kanit', sans-serif; }
-    </style>
+    <style> body { font-family: 'Kanit', sans-serif; } </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
@@ -21,13 +19,13 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-800">English Learning Vibe</h2>
-                <p class="text-xs text-slate-500 mt-1">เข้าสู่ระบบห้องเรียนภาษาอังกฤษออนไลน์</p>
+                <p class="text-xs text-slate-500 mt-1">ระบบห้องเรียนภาษาอังกฤษออนไลน์</p>
             </div>
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัวนักเรียน / รหัสครู</label>
-                    <input type="text" id="login-id" placeholder="กรอกรหัสประจำตัว (เช่น 1001 หรือ TEACHER)" required class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัว / รหัสครู</label>
+                    <input type="text" id="login-id" placeholder="รหัสนักเรียน หรือ TEACHER" required class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
@@ -36,35 +34,32 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">ห้องเรียน</label>
                     <select id="login-room" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <option value="ม.2/1">ม.2/1</option>
-                        <option value="ม.2/2">ม.2/2</option>
-                        <option value="ม.2/3">ม.2/3</option>
-                        <option value="ครูผู้สอน">สำหรับคุณครู</option>
+                        <!-- Populated dynamically -->
                     </select>
                 </div>
                 <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 transition-all">
                     เข้าสู่ระบบ <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i>
                 </button>
             </form>
-            <p class="text-[11px] text-center text-slate-400 mt-4">* โหมดคุณครูใช้รหัส: <span class="font-bold text-slate-600">TEACHER</span></p>
+            <p class="text-[11px] text-center text-slate-400 mt-4">* โหมดครูผู้สอนให้ใส่รหัสประจำตัว: <span class="font-bold text-indigo-600">TEACHER</span></p>
         </div>
     </div>
 
-    <!-- Main Navigation Header -->
+    <!-- Header Navigation -->
     <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <i class="fa-solid fa-graduation-cap text-2xl text-amber-300"></i>
                 <div>
-                    <h1 id="site-header-title" class="font-bold text-lg leading-none">English Learning Vibe</h1>
-                    <p id="site-header-sub" class="text-[11px] text-indigo-200 mt-1">Interactive Learning Space</p>
+                    <h1 class="font-bold text-lg leading-none">English Learning Vibe</h1>
+                    <p class="text-[11px] text-indigo-200 mt-1">Interactive Learning Space</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-3">
                 <div class="text-right hidden sm:block">
-                    <p id="nav-user-name" class="text-xs font-bold leading-tight">ด.ช. สมชาย สายเรียน</p>
-                    <p id="nav-user-role" class="text-[10px] text-indigo-200">นักเรียน ม.2/1 (เลขประจำตัว 1001)</p>
+                    <p id="nav-user-name" class="text-xs font-bold leading-tight">-</p>
+                    <p id="nav-user-role" class="text-[10px] text-indigo-200">-</p>
                 </div>
                 <button onclick="handleLogout()" class="px-3 py-1.5 bg-indigo-800 hover:bg-indigo-900 text-indigo-100 rounded-lg text-xs font-medium border border-indigo-500">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ
@@ -73,253 +68,258 @@
         </div>
     </header>
 
-    <!-- App Container -->
+    <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 py-6 flex-1 flex flex-col md:flex-row gap-6 w-full">
         
         <!-- Sidebar Navigation -->
         <aside class="w-full md:w-64 bg-white rounded-2xl shadow-sm border border-slate-200 p-4 shrink-0 flex flex-col justify-between">
             <nav class="space-y-1">
-                <p class="text-[11px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">เมนูเรียนรู้</p>
+                <p class="text-[11px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">เมนูการเรียนรู้</p>
                 <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-indigo-50 text-indigo-700">
                     <i class="fa-solid fa-chart-pie w-5"></i> <span>ภาพรวม (Dashboard)</span>
                 </a>
                 <a href="#" onclick="showSection('modules')" id="nav-modules" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-book-open w-5"></i> <span>หน่วยการเรียนรู้</span>
+                    <i class="fa-solid fa-book-open w-5"></i> <span>หน่วยการเรียนรู้ & สื่อ</span>
                 </a>
                 <a href="#" onclick="showSection('submit')" id="nav-submit" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-paper-plane w-5"></i> <span>ส่งการบ้าน (AI ตรวจ)</span>
+                    <i class="fa-solid fa-paper-plane w-5"></i> <span>ส่งการบ้าน (ส่งไฟล์/รูป)</span>
                 </a>
                 <a href="#" onclick="showSection('grades')" id="nav-grades" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-square-poll-vertical w-5"></i> <span>สมุดคะแนนและรายงาน</span>
+                    <i class="fa-solid fa-square-poll-vertical w-5"></i> <span>สมุดคะแนน</span>
                 </a>
 
                 <!-- Teacher Menu -->
                 <div id="teacher-menu" class="pt-4 border-t border-slate-100 mt-4 space-y-1 hidden">
-                    <p class="text-[11px] font-bold text-amber-600 px-3 uppercase tracking-wider mb-2">ระบบจัดการของคุณครู</p>
-                    <a href="#" onclick="showSection('roster')" id="nav-roster" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                        <i class="fa-solid fa-users-rectangle w-5"></i> <span>นำเข้านักเรียนรายห้อง</span>
+                    <p class="text-[11px] font-bold text-amber-600 px-3 uppercase tracking-wider mb-2">ระบบจัดการสำหรับครู</p>
+                    <a href="#" onclick="showSection('manage-rooms')" id="nav-manage-rooms" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-bold text-amber-700 bg-amber-50 hover:bg-amber-100">
+                        <i class="fa-solid fa-users-gear w-5"></i> <span>+ จัดการห้องเรียน & นักเรียน</span>
                     </a>
-                    <a href="#" onclick="showSection('add-content')" id="nav-add-content" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                        <i class="fa-solid fa-folder-plus w-5"></i> <span>เพิ่มบทเรียน/การบ้าน</span>
+                    <a href="#" onclick="showSection('add-module')" id="nav-add-module" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100">
+                        <i class="fa-solid fa-folder-plus w-5"></i> <span>+ เพิ่มหน่วยการเรียนรู้</span>
+                    </a>
+                    <a href="#" onclick="showSection('add-assignment')" id="nav-add-assignment" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100">
+                        <i class="fa-solid fa-file-circle-plus w-5"></i> <span>+ เพิ่มการบ้าน (เลือกห้อง)</span>
                     </a>
                 </div>
             </nav>
         </aside>
 
-        <!-- Main Workspace -->
+        <!-- Main Content Area -->
         <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 p-6 min-h-[550px]">
             
             <!-- SECTION: Dashboard -->
             <section id="sec-dashboard" class="space-y-6">
-                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
-                    <div class="relative z-10">
-                        <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium inline-block mb-3">English Learning Space</span>
-                        <h2 id="dash-welcome-title" class="text-2xl font-bold mb-2">ยินดีต้อนรับสู่ห้องเรียนภาษาอังกฤษ!</h2>
-                        <p id="dash-welcome-desc" class="text-indigo-100 text-sm max-w-2xl">ส่งการบ้าน เรียนรู้บทเรียนออนไลน์ และรับผลการวิเคราะห์คะแนนจาก AI ได้ทันที</p>
-                    </div>
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+                    <span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium inline-block mb-3">English Learning Space</span>
+                    <h2 class="text-2xl font-bold mb-2">ยินดีต้อนรับสู่ห้องเรียนภาษาอังกฤษ!</h2>
+                    <p class="text-indigo-100 text-sm">เข้าเรียนตามหน่วยการเรียนรู้ ส่งการบ้านด้วยรูปถ่ายสมุดหรือไฟล์เอกสาร และเช็กคะแนนได้ทันที</p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">งานที่ส่งแล้ว</p>
-                            <p id="stat-submitted" class="text-xl font-bold text-slate-800">1 ชิ้น</p>
-                        </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <p class="text-xs text-slate-500">ห้องเรียนของคุณ</p>
+                        <p id="dash-room-display" class="text-lg font-bold text-indigo-600 mt-1">-</p>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">การบ้านรอส่ง</p>
-                            <p id="stat-pending" class="text-xl font-bold text-slate-800">1 ชิ้น</p>
-                        </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <p class="text-xs text-slate-500">จำนวนการบ้านที่ต้องส่ง</p>
+                        <p id="dash-hw-count" class="text-lg font-bold text-amber-600 mt-1">0 งาน</p>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl font-bold">
-                            <i class="fa-solid fa-star"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-slate-500">คะแนนสะสมเฉลี่ย</p>
-                            <p id="stat-score" class="text-xl font-bold text-slate-800">8.5 / 10</p>
-                        </div>
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                        <p class="text-xs text-slate-500">คะแนนรวมสะสม</p>
+                        <p id="dash-total-score" class="text-lg font-bold text-emerald-600 mt-1">0 คะแนน</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION: Submit Assignment -->
-            <section id="sec-submit" class="space-y-6 hidden">
-                <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งการบ้านออนไลน์ (ระบบ AI ช่วยตรวจ)</h2>
-                    <p class="text-xs text-slate-500 mt-1">นักเรียนสามารถพิมพ์คำตอบ อัปโหลดรูปถ่ายสมุด หรือไฟล์ PDF เพื่อให้ AI ช่วยประเมินคะแนนได้ทันที</p>
+            <!-- SECTION 1: Modules / Units (With External Links & Document Attachments) -->
+            <section id="sec-modules" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>หน่วยการเรียนรู้และสื่อการสอน</h2>
+                        <p class="text-xs text-slate-500 mt-1">เอกสารประกอบการเรียน ลิงก์สื่อภายนอก และคลิปวิดีโอ</p>
+                    </div>
+                    <button id="btn-top-add-mod" onclick="showSection('add-module')" class="hidden px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow">
+                        <i class="fa-solid fa-plus mr-1"></i> เพิ่มหน่วยการเรียนรู้
+                    </button>
                 </div>
 
-                <form onsubmit="handleAssignmentSubmit(event)" class="space-y-4 max-w-2xl">
+                <div id="modules-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Dynamic Modules List -->
+                </div>
+            </section>
+
+            <!-- SECTION 2: Submit Assignment (NO TEXT AREA - File/Photo Upload Only) -->
+            <section id="sec-submit" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งการบ้านออนไลน์ (AI ตรวจงาน)</h2>
+                    <p class="text-xs text-slate-500 mt-1">ถ่ายภาพสมุดโน้ต/ใบงาน หรืออัปโหลดไฟล์ PDF/Word เพื่อส่งงาน</p>
+                </div>
+
+                <form onsubmit="handleSubmitAssignment(event)" class="space-y-4 max-w-xl">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">เลือกการบ้าน / แบบฝึกหัด</label>
-                        <select id="sub-assignment-id" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option value="HW1">HW1: Present Perfect Tense Writing (10 คะแนน)</option>
-                            <option value="HW2">HW2: Reading Comprehension Exercise (10 คะแนน)</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">เลือกการบ้านที่จะส่ง</label>
+                        <select id="sub-assignment-select" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" required>
+                            <!-- Filtered per student room -->
                         </select>
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">พิมพ์คำตอบภาษาอังกฤษ</label>
-                        <textarea id="sub-text-answer" rows="4" placeholder="พิมพ์ประโยคหรือเนื้อหาคำตอบของคุณที่นี่..." class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
+                    <!-- Photo / File Upload Box ONLY -->
+                    <div class="p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-indigo-200 text-center space-y-3">
+                        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-700">อัปโหลดรูปถ่ายสมุด หรือ ไฟล์เอกสาร</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">รองรับไฟล์รูปภาพ (JPG, PNG), PDF, Word (.docx) หรือ PowerPoint (.pptx)</p>
+                        </div>
+                        <input type="file" id="sub-file-input" accept="image/*,.pdf,.doc,.docx,.ppt,.pptx" required class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer">
                     </div>
 
-                    <div class="p-4 bg-slate-50 rounded-xl border border-dashed border-slate-300">
-                        <label class="block text-xs font-bold text-slate-700 mb-1"><i class="fa-solid fa-file-arrow-up mr-1 text-indigo-600"></i> แนบรูปถ่ายสมุด / ไฟล์ PDF</label>
-                        <input type="file" id="sub-file" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
-                        <p class="text-[11px] text-slate-400 mt-2">* รองรับไฟล์รูปภาพสมุดโน้ต (JPG/PNG) และไฟล์เอกสาร PDF</p>
-                    </div>
-
-                    <button type="submit" id="btn-submit-hw" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-md transition-all flex items-center justify-center">
-                        <span>ส่งงานและให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>
+                    <button type="submit" id="btn-submit-work" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-md transition-all flex items-center justify-center">
+                        <span>ส่งงานให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>
                     </button>
                 </form>
 
-                <div id="ai-result-box" class="hidden p-5 rounded-2xl bg-indigo-50 border border-indigo-200 space-y-3">
-                    <div class="flex justify-between items-center border-b border-indigo-100 pb-2">
-                        <span class="font-bold text-indigo-900 text-sm"><i class="fa-solid fa-microchip text-indigo-600 mr-2"></i>ผลการวิเคราะห์และตรวจคะแนนโดย AI</span>
-                        <span id="ai-score-badge" class="px-3 py-1 bg-emerald-500 text-white rounded-full font-bold text-xs">8.5 / 10</span>
+                <div id="ai-feedback-box" class="hidden p-5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
+                    <div class="flex justify-between items-center border-b border-emerald-200 pb-2">
+                        <span class="font-bold text-emerald-900 text-sm"><i class="fa-solid fa-circle-check text-emerald-600 mr-2"></i>ส่งงานสำเร็จ & AI ประเมินผลแล้ว</span>
+                        <span id="ai-score-display" class="px-3 py-1 bg-emerald-600 text-white rounded-full font-bold text-xs">9 / 10 คะแนน</span>
                     </div>
-                    <div>
-                        <p class="text-xs font-bold text-slate-700">จุดเด่น (Strengths):</p>
-                        <p id="ai-strengths" class="text-xs text-slate-600 mt-0.5">- ใช้คำศัพท์ถูกต้องตามบริบทและสะกดถูกต้อง</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold text-slate-700">จุดที่ต้องแก้ไข (Areas to Improve):</p>
-                        <p id="ai-improvements" class="text-xs text-slate-600 mt-0.5">- สังเกตการใช้ Verb ช่อง 3 ในโครงสร้าง Present Perfect</p>
-                    </div>
+                    <p class="text-xs text-slate-600"><strong>ข้อเสนอแนะจาก AI:</strong> ลายมือชัดเจน ทำแบบฝึกหัดถูกต้องตามหลักไวยากรณ์</p>
                 </div>
             </section>
 
-            <!-- SECTION: Gradebook with Room Filter & Export -->
+            <!-- SECTION: Gradebook -->
             <section id="sec-grades" class="space-y-6 hidden">
-                <div class="border-b border-slate-200 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-square-poll-vertical text-indigo-600 mr-2"></i>รายงานและสมุดบันทึกคะแนนนักเรียน</h2>
-                        <p class="text-xs text-slate-500 mt-1">จัดการคะแนนรายบุคคล แยกตามห้องเรียน พร้อมส่งออกไฟล์ Excel</p>
+                        <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-square-poll-vertical text-indigo-600 mr-2"></i>สมุดบันทึกคะแนน</h2>
+                        <p class="text-xs text-slate-500 mt-1">สรุปคะแนนการส่งงานรายบุคคล</p>
                     </div>
-                    
-                    <div class="flex items-center space-x-3">
-                        <!-- Class Room Filter -->
-                        <select id="gradebook-room-filter" onchange="renderGradebook()" class="text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option value="ALL">แสดงทุกห้องเรียน</option>
-                            <option value="ม.2/1">เฉพาะห้อง ม.2/1</option>
-                            <option value="ม.2/2">เฉพาะห้อง ม.2/2</option>
-                            <option value="ม.2/3">เฉพาะห้อง ม.2/3</option>
-                        </select>
-                        
-                        <!-- Export CSV Button -->
-                        <button onclick="exportGradebookCSV()" class="px-3 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow flex items-center">
-                            <i class="fa-solid fa-file-excel mr-1.5"></i> ดาวน์โหลดคะแนน (CSV)
-                        </button>
-                    </div>
+                    <select id="gradebook-filter" onchange="renderGradebook()" class="text-xs font-bold p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                        <!-- Rooms list -->
+                    </select>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
                             <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                                <th class="p-3">รหัสประจำตัว</th>
+                                <th class="p-3">รหัส</th>
                                 <th class="p-3">ชื่อ - นามสกุล</th>
-                                <th class="p-3">ห้องเรียน</th>
-                                <th class="p-3">HW1 (10)</th>
-                                <th class="p-3">HW2 (10)</th>
+                                <th class="p-3">ห้อง</th>
+                                <th class="p-3">งานที่ส่งแล้ว</th>
                                 <th class="p-3">คะแนนรวม</th>
-                                <th class="p-3">สถานะ AI ตรวจ</th>
                             </tr>
                         </thead>
-                        <tbody id="gradebook-table-body" class="divide-y divide-slate-100">
-                            <!-- Populated dynamically -->
+                        <tbody id="gradebook-tbody" class="divide-y divide-slate-100">
+                            <!-- Rows -->
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- SECTION: Modules -->
-            <section id="sec-modules" class="space-y-6 hidden">
+            <!-- SECTION 3: Teacher - Create Rooms & Batch Copy-Paste Students -->
+            <section id="sec-manage-rooms" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>หน่วยการเรียนรู้และสื่อภายนอก</h2>
-                    <p class="text-xs text-slate-500 mt-1">บทเรียนภาษาอังกฤษ วิดีโอ และใบงานการเรียนรู้</p>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users-gear text-amber-600 mr-2"></i>สร้างห้องเรียน & นำเข้านักเรียน (วางจาก Excel)</h2>
+                    <p class="text-xs text-slate-500 mt-1">สร้างห้องเรียนใหม่ และก๊อปปี้รายชื่อนักเรียนมาวางทีละหลายคนได้ทันที</p>
                 </div>
 
-                <div id="modules-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
-                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">Module 1</span>
-                        <h3 class="font-bold text-slate-800 text-sm">Present Perfect Tense Master</h3>
-                        <p class="text-xs text-slate-500">เรียนรู้หลักการใช้ Present Perfect ผ่านวิดีโอและใบงานโต้ตอบ</p>
-                        <div class="pt-2 flex flex-wrap gap-2">
-                            <a href="https://www.youtube.com" target="_blank" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-semibold flex items-center">
-                                <i class="fa-brands fa-youtube mr-1.5"></i> ดูคลิป YouTube
-                            </a>
-                            <a href="https://www.liveworksheets.com" target="_blank" class="px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-xs font-semibold flex items-center">
-                                <i class="fa-solid fa-file-pen mr-1.5"></i> ทำใบงาน Liveworksheets
-                            </a>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Form 1: Add New Room -->
+                    <form onsubmit="handleCreateRoom(event)" class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-xs text-slate-700"><i class="fa-solid fa-plus-circle mr-1 text-amber-600"></i>1. สร้างห้องเรียนใหม่</h3>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">ชื่อห้องเรียน</label>
+                            <input type="text" id="new-room-name" placeholder="เช่น ม.2/1 หรือ ม.2/2" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
                         </div>
-                    </div>
+                        <button type="submit" class="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-xl text-xs shadow">
+                            สร้างห้องเรียน
+                        </button>
+                    </form>
+
+                    <!-- Form 2: Batch Copy-Paste Students -->
+                    <form onsubmit="handleBatchImportStudents(event)" class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                        <h3 class="font-bold text-xs text-slate-700"><i class="fa-solid fa-paste mr-1 text-indigo-600"></i>2. ก๊อปวางรายชื่อนักเรียนหลายๆ คน</h3>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">เลือกห้องเรียนที่จะเพิ่มเด็กเข้า</label>
+                            <select id="import-target-room" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
+                                <!-- Dynamic Rooms -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">วางรายชื่อ (รูปแบบ: รหัส ชื่อ-นามสกุล คนละ 1 แถว)</label>
+                            <textarea id="import-batch-text" rows="5" placeholder="1001 ด.ช.สมชาย สายเรียน&#10;1002 ด.ญ.สมหญิง จริงใจ&#10;1003 ด.ช.กิตติศักดิ์ เรียนดี" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 font-mono outline-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs shadow">
+                            <i class="fa-solid fa-file-import mr-1"></i> นำเข้ารายชื่อเข้าห้องเรียน
+                        </button>
+                    </form>
                 </div>
             </section>
 
-            <!-- SECTION: Teacher Student Roster Management -->
-            <section id="sec-roster" class="space-y-6 hidden">
+            <!-- SECTION 1 (Teacher Part): Add Unit/Module -->
+            <section id="sec-add-module" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-users-rectangle text-amber-600 mr-2"></i>นำเข้านักเรียนรายห้อง (สำหรับครู)</h2>
-                    <p class="text-xs text-slate-500 mt-1">เพิ่มรายชื่อนักเรียนและรหัสประจำตัวแยกตามห้องเรียน</p>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-folder-plus text-indigo-600 mr-2"></i>สร้างหน่วยการเรียนรู้ใหม่</h2>
+                    <p class="text-xs text-slate-500 mt-1">เพิ่มสื่อการเรียนรู้ แนบลิงก์ภายนอก หรืออัปโหลดเอกสาร PDF, Word, PowerPoint</p>
                 </div>
 
-                <form onsubmit="handleAddStudent(event)" class="space-y-4 max-w-xl bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัวนักเรียน</label>
-                            <input type="text" id="add-std-id" placeholder="เช่น 1002" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
-                            <input type="text" id="add-std-name" placeholder="เช่น ด.ญ. สมหญิง จริงใจ" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
-                        </div>
+                <form onsubmit="handleCreateModule(event)" class="space-y-4 max-w-xl bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหน่วยการเรียนรู้</label>
+                        <input type="text" id="mod-title" placeholder="เช่น Unit 1: Present Perfect Master" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">ห้องเรียน</label>
-                        <select id="add-std-room" class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
-                            <option value="ม.2/1">ม.2/1</option>
-                            <option value="ม.2/2">ม.2/2</option>
-                            <option value="ม.2/3">ม.2/3</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">รายละเอียดบทเรียน</label>
+                        <textarea id="mod-desc" rows="2" placeholder="อธิบายเนื้อหาและคำแนะนำการเรียน..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">แปะลิงก์ภายนอก (YouTube / Liveworksheets / Google Forms)</label>
+                        <input type="url" id="mod-link-url" placeholder="https://www.youtube.com/watch?v=... หรือ https://forms.gle/..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">แนบไฟล์เอกสารสื่อการสอน (PDF / Word / PowerPoint)</label>
+                        <input type="file" id="mod-doc-file" accept=".pdf,.doc,.docx,.ppt,.pptx" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">มอบหมายให้ห้องเรียนไหนบ้าง</label>
+                        <select id="mod-target-room" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
+                            <option value="ALL">มอบหมายทุกห้องเรียน</option>
+                            <!-- Rooms List -->
                         </select>
                     </div>
-                    <button type="submit" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow">
-                        <i class="fa-solid fa-user-plus mr-1"></i> เพิ่มรายชื่อนักเรียน
+                    <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs shadow">
+                        บันทึกหน่วยการเรียนรู้
                     </button>
                 </form>
             </section>
 
-            <!-- SECTION: Teacher Add Content -->
-            <section id="sec-add-content" class="space-y-6 hidden">
+            <!-- SECTION 4: Teacher - Add Assignment per Room -->
+            <section id="sec-add-assignment" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-folder-plus text-amber-600 mr-2"></i>เพิ่มบทเรียนและการบ้าน (ฝังลิงก์ภายนอก)</h2>
-                    <p class="text-xs text-slate-500 mt-1">สร้างเนื้อหาใหม่ และแปะลิงก์ YouTube, Liveworksheets หรือ Google Forms</p>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-file-circle-plus text-emerald-600 mr-2"></i>สร้างการบ้านใหม่ (ระบุห้องเรียน)</h2>
+                    <p class="text-xs text-slate-500 mt-1">สั่งการบ้านให้นักเรียนส่งภาพถ่ายสมุดหรือไฟล์งาน</p>
                 </div>
 
-                <form onsubmit="handleAddModule(event)" class="space-y-4 max-w-xl bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <form onsubmit="handleCreateAssignment(event)" class="space-y-4 max-w-xl bg-slate-50 p-5 rounded-2xl border border-slate-200">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหัวข้อบทเรียน</label>
-                        <input type="text" id="mod-title" placeholder="เช่น Relative Clauses Master" required class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหัวข้อการบ้าน / งานที่สั่ง</label>
+                        <input type="text" id="asg-title" placeholder="เช่น HW 1: แบบฝึกหัดในสมุด หน้า 25" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">คำอธิบาย</label>
-                        <textarea id="mod-desc" rows="2" placeholder="รายละเอียดบทเรียน..." class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none"></textarea>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">คำสั่ง / รายละเอียดงาน</label>
+                        <textarea id="asg-instruction" rows="2" placeholder="เช่น ให้ถ่ายภาพสมุดโน้ตส่วนที่สรุปแบบฝึกหัดส่งให้ AI ตรวจ..." class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none"></textarea>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">แปะลิงก์ภายนอก (YouTube / Liveworksheets / Google Forms)</label>
-                        <input type="url" id="mod-url" placeholder="https://www.youtube.com/watch?v=..." class="w-full text-sm p-2.5 rounded-xl border border-slate-300 outline-none">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">สั่งการบ้านให้ห้องเรียนไหน</label>
+                        <select id="asg-target-room" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
+                            <option value="ALL">สั่งทุกห้องเรียน</option>
+                            <!-- Rooms List -->
+                        </select>
                     </div>
-                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> บันทึกบทเรียนใหม่
+                    <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow">
+                        บันทึกการสร้างการบ้าน
                     </button>
                 </form>
             </section>
@@ -327,15 +327,54 @@
         </main>
     </div>
 
-    <!-- Application Script Logic -->
+    <!-- JavaScript Data & Business Logic -->
     <script>
+        // Data Store
+        let rooms = ["ม.2/1", "ม.2/2", "ม.2/3"];
         let currentUser = null;
+
         let students = [
-            { id: "1001", name: "ด.ช. สมชาย สายเรียน", room: "ม.2/1", hw1: 8.5, hw2: 9.0 },
-            { id: "1002", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.2/1", hw1: 9.5, hw2: 8.5 },
-            { id: "1003", name: "ด.ช. กิตติศักดิ์ เรียนดี", room: "ม.2/2", hw1: 7.0, hw2: 8.0 },
-            { id: "1004", name: "ด.ญ. ปรียาภรณ์ ตั้งใจ", room: "ม.2/2", hw1: 10.0, hw2: 9.5 }
+            { id: "1001", name: "ด.ช. สมชาย สายเรียน", room: "ม.2/1", submittedCount: 1, totalScore: 9 },
+            { id: "1002", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.2/1", submittedCount: 0, totalScore: 0 },
+            { id: "2001", name: "ด.ช. กิตติศักดิ์ เรียนดี", room: "ม.2/2", submittedCount: 1, totalScore: 10 }
         ];
+
+        let modules = [
+            {
+                id: 1,
+                title: "Unit 1: Present Perfect Tense Master",
+                desc: "เรียนรู้หลักการใช้ Present Perfect ผ่านคลิปวิดีโอ ใบงาน Liveworksheets และดาวน์โหลดชีทสรุป PDF",
+                linkUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                fileName: "Sheet_Present_Perfect.pdf",
+                targetRoom: "ALL"
+            }
+        ];
+
+        let assignments = [
+            { id: 101, title: "HW 1: แบบฝึกหัดในสมุด Present Perfect (10 คะแนน)", targetRoom: "ม.2/1" },
+            { id: 102, title: "HW 2: ใบงาน Reading Comprehension (10 คะแนน)", targetRoom: "ม.2/2" }
+        ];
+
+        // Init
+        window.onload = function() {
+            populateRoomDropdowns();
+        };
+
+        function populateRoomDropdowns() {
+            const loginSelect = document.getElementById('login-room');
+            const importSelect = document.getElementById('import-target-room');
+            const modSelect = document.getElementById('mod-target-room');
+            const asgSelect = document.getElementById('asg-target-room');
+            const gradeSelect = document.getElementById('gradebook-filter');
+
+            loginSelect.innerHTML = rooms.map(r => `<option value="${r}">${r}</option>`).join('') + `<option value="TEACHER">สำหรับครูผู้สอน</option>`;
+            importSelect.innerHTML = rooms.map(r => `<option value="${r}">${r}</option>`).join('');
+            
+            const roomOpts = `<option value="ALL">ทุกห้องเรียน</option>` + rooms.map(r => `<option value="${r}">${r}</option>`).join('');
+            modSelect.innerHTML = roomOpts;
+            asgSelect.innerHTML = roomOpts;
+            gradeSelect.innerHTML = `<option value="ALL">แสดงทุกห้องเรียน</option>` + rooms.map(r => `<option value="${r}">${r}</option>`).join('');
+        }
 
         function handleLogin(e) {
             e.preventDefault();
@@ -346,14 +385,14 @@
             if(id.toUpperCase() === 'TEACHER') {
                 currentUser = { id: 'TEACHER', name: name || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
             } else {
-                currentUser = { id: id, name: name, room: room, isTeacher: false };
+                currentUser = { id, name, room, isTeacher: false };
                 if(!students.find(s => s.id === id)) {
-                    students.push({ id: id, name: name, room: room, hw1: 0, hw2: 0 });
+                    students.push({ id, name, room, submittedCount: 0, totalScore: 0 });
                 }
             }
 
             document.getElementById('auth-screen').classList.add('hidden');
-            updateUIState();
+            updateUI();
         }
 
         function handleLogout() {
@@ -361,25 +400,31 @@
             document.getElementById('auth-screen').classList.remove('hidden');
         }
 
-        function updateUIState() {
+        function updateUI() {
             if(!currentUser) return;
-
             document.getElementById('nav-user-name').innerText = currentUser.name;
-            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'คุณครูผู้สอน' : `นักเรียน ${currentUser.room} (รหัส ${currentUser.id})`;
+            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'ครูผู้สอน' : `นักเรียน ${currentUser.room} (รหัส ${currentUser.id})`;
 
             const teacherMenu = document.getElementById('teacher-menu');
+            const btnTopAddMod = document.getElementById('btn-top-add-mod');
+
             if(currentUser.isTeacher) {
                 teacherMenu.classList.remove('hidden');
+                btnTopAddMod.classList.remove('hidden');
             } else {
                 teacherMenu.classList.add('hidden');
+                btnTopAddMod.classList.add('hidden');
             }
 
+            document.getElementById('dash-room-display').innerText = currentUser.room;
+            renderModules();
+            renderAssignmentDropdown();
             renderGradebook();
             showSection('dashboard');
         }
 
         function showSection(secId) {
-            ['dashboard', 'submit', 'grades', 'modules', 'roster', 'add-content'].forEach(id => {
+            ['dashboard', 'modules', 'submit', 'grades', 'manage-rooms', 'add-module', 'add-assignment'].forEach(id => {
                 const el = document.getElementById('sec-' + id);
                 if(el) el.classList.add('hidden');
             });
@@ -387,97 +432,147 @@
             if(target) target.classList.remove('hidden');
         }
 
-        function handleAssignmentSubmit(e) {
+        // 1. Render Modules (Targeted per room & display external link/files)
+        function renderModules() {
+            const container = document.getElementById('modules-container');
+            const visibleModules = modules.filter(m => m.targetRoom === 'ALL' || (currentUser && m.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
+
+            if(visibleModules.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400">ยังไม่มีหน่วยการเรียนรู้สำหรับห้องนี้</p>`;
+                return;
+            }
+
+            container.innerHTML = visibleModules.map(m => `
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">${m.targetRoom === 'ALL' ? 'ทุกห้องเรียน' : m.targetRoom}</span>
+                        <i class="fa-solid fa-book text-indigo-400"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-sm">${m.title}</h3>
+                    <p class="text-xs text-slate-500">${m.desc}</p>
+                    <div class="pt-2 flex flex-wrap gap-2 border-t border-slate-200">
+                        ${m.linkUrl ? `<a href="${m.linkUrl}" target="_blank" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-bold flex items-center"><i class="fa-brands fa-youtube mr-1"></i> เปิดสื่อ/ลิงก์ภายนอก</a>` : ''}
+                        ${m.fileName ? `<span class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center"><i class="fa-solid fa-file-pdf mr-1 text-red-500"></i> ${m.fileName}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 2. Render Assignment Dropdown for Submit Section
+        function renderAssignmentDropdown() {
+            const select = document.getElementById('sub-assignment-select');
+            const visibleAssignments = assignments.filter(a => a.targetRoom === 'ALL' || (currentUser && a.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
+
+            if(visibleAssignments.length === 0) {
+                select.innerHTML = `<option value="">ไม่มีการบ้านที่เปิดรับในห้องนี้</option>`;
+                return;
+            }
+
+            select.innerHTML = visibleAssignments.map(a => `<option value="${a.id}">${a.title} (${a.targetRoom})</option>`).join('');
+        }
+
+        // Submit Assignment Action
+        function handleSubmitAssignment(e) {
             e.preventDefault();
-            const btn = document.getElementById('btn-submit-hw');
-            btn.innerHTML = '<span>กำลังส่งงานและให้ AI วิเคราะห์...</span> <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
+            const btn = document.getElementById('btn-submit-work');
+            btn.innerHTML = '<span>กำลังส่งไฟล์และให้ AI ประเมิน...</span> <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
 
             setTimeout(() => {
-                btn.innerHTML = '<span>ส่งงานและให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>';
-                document.getElementById('ai-result-box').classList.remove('hidden');
-                
-                // Update score for current student
-                const std = students.find(s => s.id === currentUser.id);
-                if(std) std.hw1 = 8.5;
+                btn.innerHTML = '<span>ส่งงานให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>';
+                document.getElementById('ai-feedback-box').classList.remove('hidden');
+
+                if(currentUser && !currentUser.isTeacher) {
+                    const std = students.find(s => s.id === currentUser.id);
+                    if(std) {
+                        std.submittedCount += 1;
+                        std.totalScore += 9;
+                    }
+                }
                 renderGradebook();
-
-                alert('ส่งงานเรียบร้อยแล้ว! AI ได้ทำการตรวจและประเมินคะแนนแล้วครับ');
-            }, 1200);
+                alert('ส่งงานเรียบร้อยแล้ว!');
+            }, 1000);
         }
 
-        function renderGradebook() {
-            const filterRoom = document.getElementById('gradebook-room-filter').value;
-            const tbody = document.getElementById('gradebook-table-body');
-            
-            const filteredStudents = (filterRoom === 'ALL') 
-                ? students 
-                : students.filter(s => s.room === filterRoom);
-
-            tbody.innerHTML = filteredStudents.map(s => {
-                const total = (s.hw1 || 0) + (s.hw2 || 0);
-                return `
-                    <tr>
-                        <td class="p-3 font-mono font-bold">${s.id}</td>
-                        <td class="p-3 font-semibold text-slate-800">${s.name}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-lg text-[10px] font-bold">${s.room}</span></td>
-                        <td class="p-3 font-medium">${s.hw1 || '-'}</td>
-                        <td class="p-3 font-medium">${s.hw2 || '-'}</td>
-                        <td class="p-3 font-bold text-indigo-600">${total.toFixed(1)} คะแนน</td>
-                        <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold">ตรวจแล้ว</span></td>
-                    </tr>
-                `;
-            }).join('');
+        // 3. Teacher: Create Room & Batch Copy-Paste Students
+        function handleCreateRoom(e) {
+            e.preventDefault();
+            const roomName = document.getElementById('new-room-name').value.trim();
+            if(roomName && !rooms.includes(roomName)) {
+                rooms.push(roomName);
+                populateRoomDropdowns();
+                alert(`สร้างห้องเรียน "${roomName}" เรียบร้อยแล้ว`);
+                document.getElementById('new-room-name').value = '';
+            }
         }
 
-        function exportGradebookCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-            csvContent += "รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,HW1,HW2,คะแนนรวม\n";
+        function handleBatchImportStudents(e) {
+            e.preventDefault();
+            const targetRoom = document.getElementById('import-target-room').value;
+            const text = document.getElementById('import-batch-text').value.trim();
+            const lines = text.split('\n');
+            let addedCount = 0;
 
-            students.forEach(s => {
-                const total = (s.hw1 || 0) + (s.hw2 || 0);
-                csvContent += `${s.id},${s.name},${s.room},${s.hw1 || 0},${s.hw2 || 0},${total.toFixed(1)}\n`;
+            lines.forEach(line => {
+                const parts = line.trim().split(/\s+/);
+                if(parts.length >= 2) {
+                    const id = parts[0];
+                    const name = parts.slice(1).join(' ');
+                    if(!students.find(s => s.id === id)) {
+                        students.push({ id, name, room: targetRoom, submittedCount: 0, totalScore: 0 });
+                        addedCount++;
+                    }
+                }
             });
 
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "student_scores.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function handleAddStudent(e) {
-            e.preventDefault();
-            const id = document.getElementById('add-std-id').value.trim();
-            const name = document.getElementById('add-std-name').value.trim();
-            const room = document.getElementById('add-std-room').value;
-
-            students.push({ id, name, room, hw1: 0, hw2: 0 });
-            alert(`เพิ่มนักเรียน ${name} (${room}) เรียบร้อยแล้ว`);
-            document.getElementById('add-std-id').value = '';
-            document.getElementById('add-std-name').value = '';
+            alert(`นำเข้านักเรียนจำนวน ${addedCount} คน เข้าห้อง ${targetRoom} เรียบร้อยแล้ว!`);
+            document.getElementById('import-batch-text').value = '';
             renderGradebook();
         }
 
-        function handleAddModule(e) {
+        // 4. Teacher: Create Module & Create Assignment
+        function handleCreateModule(e) {
             e.preventDefault();
             const title = document.getElementById('mod-title').value;
             const desc = document.getElementById('mod-desc').value;
-            const url = document.getElementById('mod-url').value;
+            const linkUrl = document.getElementById('mod-link-url').value;
+            const fileInput = document.getElementById('mod-doc-file');
+            const targetRoom = document.getElementById('mod-target-room').value;
 
-            const list = document.getElementById('modules-list');
-            const card = document.createElement('div');
-            card.className = "p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3";
-            card.innerHTML = `
-                <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">New Module</span>
-                <h3 class="font-bold text-slate-800 text-sm">${title}</h3>
-                <p class="text-xs text-slate-500">${desc}</p>
-                ${url ? `<a href="${url}" target="_blank" class="inline-block px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-semibold"><i class="fa-solid fa-link mr-1"></i> เปิดสื่อการเรียนรู้</a>` : ''}
-            `;
-            list.appendChild(card);
-            alert('บันทึกบทเรียนเรียบร้อยแล้ว!');
+            const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+
+            modules.push({ id: Date.now(), title, desc, linkUrl, fileName, targetRoom });
+            alert('เพิ่มหน่วยการเรียนรู้เรียบร้อยแล้ว!');
+            renderModules();
             showSection('modules');
+        }
+
+        function handleCreateAssignment(e) {
+            e.preventDefault();
+            const title = document.getElementById('asg-title').value;
+            const targetRoom = document.getElementById('asg-target-room').value;
+
+            assignments.push({ id: Date.now(), title, targetRoom });
+            alert(`เพิ่มการบ้านสำหรับห้อง ${targetRoom} เรียบร้อยแล้ว!`);
+            renderAssignmentDropdown();
+            showSection('submit');
+        }
+
+        // Render Gradebook
+        function renderGradebook() {
+            const filterRoom = document.getElementById('gradebook-filter').value;
+            const tbody = document.getElementById('gradebook-tbody');
+
+            const filteredStudents = (filterRoom === 'ALL') ? students : students.filter(s => s.room === filterRoom);
+
+            tbody.innerHTML = filteredStudents.map(s => `
+                <tr>
+                    <td class="p-3 font-mono font-bold">${s.id}</td>
+                    <td class="p-3 font-semibold text-slate-800">${s.name}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-lg text-[10px] font-bold">${s.room}</span></td>
+                    <td class="p-3">${s.submittedCount} งาน</td>
+                    <td class="p-3 font-bold text-emerald-600">${s.totalScore} คะแนน</td>
+                </tr>
+            `).join('');
         }
     </script>
 </body>
