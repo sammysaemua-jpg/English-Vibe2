@@ -30,8 +30,8 @@
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">รหัสประจำตัวนักเรียน / รหัสครู</label>
-                    <input type="text" id="login-id" placeholder="กรอกรหัสประจำตัว หรือ TEACHER" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">เลขที่ / รหัสประจำตัวนักเรียน หรือ รหัสครู</label>
+                    <input type="text" id="login-id" placeholder="กรอกเลขที่/รหัส หรือ TEACHER" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล</label>
@@ -125,7 +125,7 @@
                     </div>
                     
                     <div class="flex items-center space-x-2">
-                        <input type="text" id="input-new-room" placeholder="ชื่อห้อง เช่น ม.2/1" class="text-xs p-2 rounded-xl border border-slate-300 outline-none">
+                        <input type="text" id="input-new-room" placeholder="ชื่อห้อง เช่น ม.3/1" class="text-xs p-2 rounded-xl border border-slate-300 outline-none">
                         <button onclick="handleCreateRoom()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold">
                             <i class="fa-solid fa-plus mr-1"></i> เพิ่มห้อง
                         </button>
@@ -148,8 +148,8 @@
                             </select>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-xs font-bold text-slate-700 mb-1">วางรายชื่อ (รูปแบบ: รหัสประจำตัว ชื่อ-นามสกุล คนละ 1 บรรทัด)</label>
-                            <textarea id="import-text-area" rows="3" placeholder="1001 ด.ช.สมชาย สายเรียน&#10;1002 ด.ญ.สมหญิง จริงใจ" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 font-mono outline-none bg-white"></textarea>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">วางรายชื่อ (รูปแบบ: เลขที่ ชื่อ-นามสกุล คนละ 1 บรรทัด)</label>
+                            <textarea id="import-text-area" rows="4" placeholder="1 ด.ช.สมชาย สายเรียน&#10;2 ด.ญ.สมหญิง จริงใจ&#10;3 ด.ช.กิตติศักดิ์ เรียนดี" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 font-mono outline-none bg-white"></textarea>
                         </div>
                     </div>
                     <button onclick="handleBatchImport()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow">
@@ -179,7 +179,7 @@
                             <table class="w-full text-left text-xs">
                                 <thead>
                                     <tr class="bg-indigo-100/50 text-indigo-900 border-b border-indigo-100">
-                                        <th class="p-2.5">รหัส</th>
+                                        <th class="p-2.5">เลขที่ / รหัส</th>
                                         <th class="p-2.5">ชื่อ - นามสกุล</th>
                                         <th class="p-2.5">สถานะการส่งงาน</th>
                                         <th class="p-2.5">คะแนนรวม</th>
@@ -195,7 +195,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: Units & Modules (Online Document Preview Support) -->
+            <!-- SECTION 2: Units & Modules -->
             <section id="sec-modules" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
                     <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>หน่วยการเรียนรู้และสื่อการสอน</h2>
@@ -301,7 +301,7 @@
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
                             <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                                <th class="p-3">รหัสประจำตัว</th>
+                                <th class="p-3">เลขที่ / รหัส</th>
                                 <th class="p-3">ชื่อ - นามสกุล</th>
                                 <th class="p-3">ห้องเรียน</th>
                                 <th class="p-3">งานที่ส่งแล้ว</th>
@@ -316,7 +316,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 5: Teacher - Add Module Form (Online File URL Added) -->
+            <!-- SECTION 5: Teacher - Add Module Form -->
             <section id="sec-add-module" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
                     <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-folder-plus text-purple-600 mr-2"></i>สร้างหน่วยการเรียนรู้ใหม่</h2>
@@ -383,23 +383,24 @@
 
     <!-- Script Data Store & App Controller -->
     <script>
-        let rooms = ["ม.2/1", "ม.2/2", "ม.2/3"];
+        let rooms = ["ม.3/1", "ม.3/2", "ม.3/3"];
         let currentUser = null;
 
+        // Sample initial student data with independent IDs per room
         let students = [
-            { id: "1001", name: "ด.ช. สมชาย สายเรียน", room: "ม.2/1", submittedCount: 1, totalScore: 9 },
-            { id: "1002", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.2/1", submittedCount: 0, totalScore: 0 },
-            { id: "2001", name: "ด.ช. กิตติศักดิ์ เรียนดี", room: "ม.2/2", submittedCount: 1, totalScore: 10 }
+            { id: "1", name: "ด.ช. สมชาย สายเรียน", room: "ม.3/1", submittedCount: 1, totalScore: 9 },
+            { id: "2", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.3/1", submittedCount: 0, totalScore: 0 },
+            { id: "1", name: "ด.ช. กิตติศักดิ์ เรียนดี", room: "ม.3/2", submittedCount: 1, totalScore: 10 }
         ];
 
         let modules = [
-            { id: 1, title: "Unit 1: Present Perfect Tense", desc: "เรียนรู้ผ่านวิดีโอและเปิดอ่านไฟล์ PDF ออนไลน์ได้ทันที", linkUrl: "https://www.youtube.com", docUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", fileName: "Sheet_Present_Perfect.pdf", targetRoom: "ม.2/1" },
-            { id: 2, title: "Unit 2: Past Simple vs Present Perfect", desc: "ทบทวนการใช้โครงสร้างไวยากรณ์ผ่านแบบฝึกหัด", linkUrl: "https://www.liveworksheets.com", docUrl: "", fileName: "Grammar_Exercise.pdf", fileUrl: "#", targetRoom: "ม.2/2" }
+            { id: 1, title: "Unit 1: Present Perfect Tense", desc: "เรียนรู้ผ่านวิดีโอและเปิดอ่านไฟล์ PDF ออนไลน์ได้ทันที", linkUrl: "https://www.youtube.com", docUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", fileName: "Sheet_Present_Perfect.pdf", targetRoom: "ม.3/1" },
+            { id: 2, title: "Unit 2: Past Simple vs Present Perfect", desc: "ทบทวนการใช้โครงสร้างไวยากรณ์ผ่านแบบฝึกหัด", linkUrl: "https://www.liveworksheets.com", docUrl: "", fileName: "Grammar_Exercise.pdf", fileUrl: "#", targetRoom: "ม.3/2" }
         ];
 
         let assignments = [
-            { id: 101, title: "HW 1: แบบฝึกหัดในสมุด หน้า 25 (10 คะแนน)", targetRoom: "ม.2/1" },
-            { id: 102, title: "HW 2: ใบงาน Reading Comprehension (10 คะแนน)", targetRoom: "ม.2/2" }
+            { id: 101, title: "HW 1: แบบฝึกหัดในสมุด หน้า 25 (10 คะแนน)", targetRoom: "ม.3/1" },
+            { id: 102, title: "HW 2: ใบงาน Reading Comprehension (10 คะแนน)", targetRoom: "ม.3/2" }
         ];
 
         window.onload = function() {
@@ -434,7 +435,8 @@
                 currentUser = { id: 'TEACHER', name: name || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
             } else {
                 currentUser = { id, name, room, isTeacher: false };
-                if(!students.find(s => s.id === id)) {
+                // Check uniqueness based on BOTH ID and ROOM
+                if(!students.find(s => s.id === id && s.room === room)) {
                     students.push({ id, name, room, submittedCount: 0, totalScore: 0 });
                 }
             }
@@ -451,7 +453,7 @@
         function updateUI() {
             if(!currentUser) return;
             document.getElementById('nav-user-name').innerText = currentUser.name;
-            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'ครูผู้สอน' : `นักเรียน ${currentUser.room} (รหัส ${currentUser.id})`;
+            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'ครูผู้สอน' : `นักเรียน ${currentUser.room} (เลขที่/รหัส ${currentUser.id})`;
 
             const teacherTop = document.getElementById('teacher-menu-top');
 
@@ -551,7 +553,7 @@
                         <td class="p-2.5">${s.submittedCount > 0 ? `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-bold">ส่งแล้ว ${s.submittedCount} งาน</span>` : `<span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full font-bold">ยังไม่ส่ง</span>`}</td>
                         <td class="p-2.5 font-bold text-indigo-600">${s.totalScore} คะแนน</td>
                         <td class="p-2.5 text-center">
-                            <button onclick="deleteStudent('${s.id}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
+                            <button onclick="deleteStudent('${s.id}', '${s.room}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -560,10 +562,11 @@
                 : `<tr><td colspan="5" class="p-4 text-center text-slate-400">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>`;
         }
 
-        function deleteStudent(studentId) {
-            const std = students.find(s => s.id === studentId);
-            if(std && confirm(`คุณครูต้องการลบ "${std.name}" (รหัส ${std.id}) ออกจากระบบใช่หรือไม่?`)) {
-                students = students.filter(s => s.id !== studentId);
+        // Delete student with composite key (id + room)
+        function deleteStudent(studentId, roomName) {
+            const std = students.find(s => s.id === studentId && s.room === roomName);
+            if(std && confirm(`คุณครูต้องการลบ "${std.name}" (เลขที่/รหัส ${std.id}) ออกจากห้อง ${roomName} ใช่หรือไม่?`)) {
+                students = students.filter(s => !(s.id === studentId && s.room === roomName));
                 if(currentActiveRoom) renderRoomStudentsTable(currentActiveRoom);
                 renderClassroomCards();
                 renderGradebook();
@@ -574,6 +577,7 @@
             document.getElementById('room-detail-panel').classList.add('hidden');
         }
 
+        // Batch Import allowing duplicate IDs across DIFFERENT rooms
         function handleBatchImport() {
             const targetRoom = document.getElementById('import-room-select').value;
             const text = document.getElementById('import-text-area').value.trim();
@@ -585,7 +589,8 @@
                 if(parts.length >= 2) {
                     const id = parts[0];
                     const name = parts.slice(1).join(' ');
-                    if(!students.find(s => s.id === id)) {
+                    // Check duplicate ONLY within the SAME target room
+                    if(!students.find(s => s.id === id && s.room === targetRoom)) {
                         students.push({ id, name, room: targetRoom, submittedCount: 0, totalScore: 0 });
                         addedCount++;
                     }
@@ -598,7 +603,6 @@
             renderGradebook();
         }
 
-        // Render Modules with Online Viewer
         function renderModules() {
             const container = document.getElementById('modules-container');
             const visibleModules = modules.filter(m => m.targetRoom === 'ALL' || (currentUser && m.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
@@ -624,7 +628,6 @@
             `}).join('');
         }
 
-        // Open Online Document Preview Modal
         function openDocViewer(title, url) {
             if(!url || url === '#') {
                 alert('ไม่พบที่อยู่ไฟล์เอกสารออนไลน์');
@@ -632,11 +635,9 @@
             }
 
             let embedUrl = url;
-            // Handle Google Drive view link conversion
             if(url.includes('drive.google.com') && url.includes('/view')) {
                 embedUrl = url.replace('/view', '/preview');
             } else if(!url.endsWith('.pdf')) {
-                // Use Google Docs Viewer for Word/PPT documents
                 embedUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(url)}&embedded=true`;
             }
 
@@ -701,7 +702,7 @@
                 document.getElementById('ai-feedback-box').classList.remove('hidden');
 
                 if(currentUser && !currentUser.isTeacher) {
-                    const std = students.find(s => s.id === currentUser.id);
+                    const std = students.find(s => s.id === currentUser.id && s.room === currentUser.room);
                     if(std) {
                         std.submittedCount += 1;
                         std.totalScore += 9;
@@ -761,7 +762,7 @@
                     <td class="p-3">${s.submittedCount} งาน</td>
                     <td class="p-3 font-bold text-emerald-600">${s.totalScore} คะแนน</td>
                     <td class="p-3 text-center no-print">
-                        <button onclick="deleteStudent('${s.id}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
+                        <button onclick="deleteStudent('${s.id}', '${s.room}')" class="text-red-500 hover:text-red-700 p-1 font-bold" title="ลบนักเรียนคนนี้">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
@@ -774,7 +775,7 @@
             const filteredStudents = (filterRoom === 'ALL') ? students : students.filter(s => s.room === filterRoom);
 
             let csv = "\uFEFF";
-            csv += "รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,งานที่ส่งแล้ว(ชิ้น),คะแนนรวม\n";
+            csv += "เลขที่/รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,งานที่ส่งแล้ว(ชิ้น),คะแนนรวม\n";
 
             filteredStudents.forEach(s => {
                 csv += `"${s.id}","${s.name}","${s.room}","${s.submittedCount}","${s.totalScore}"\n`;
