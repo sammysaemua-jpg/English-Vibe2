@@ -11,8 +11,7 @@
         body { font-family: 'Kanit', sans-serif; } 
         @media print {
             header, aside, button, select, .no-print { display: none !important; }
-            main { border: none !important; shadow: none !important; padding: 0 !important; }
-            .print-only { display: block !important; }
+            main { border: none !important; box-shadow: none !important; padding: 0 !important; }
         }
     </style>
 </head>
@@ -99,6 +98,12 @@
                 <a href="#" onclick="showSection('modules')" id="nav-modules" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
                     <i class="fa-solid fa-book-open w-5 text-indigo-600"></i> <span>หน่วยการเรียนรู้ & สื่อ</span>
                 </a>
+                
+                <!-- Student Assignment List Menu (New) -->
+                <a href="#" onclick="showSection('assignment-list')" id="nav-assignment-list" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-tasks w-5 text-indigo-600"></i> <span>รายการการบ้านของฉัน</span>
+                </a>
+
                 <a href="#" onclick="showSection('submit')" id="nav-submit" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
                     <i class="fa-solid fa-paper-plane w-5 text-indigo-600"></i> <span>ส่งการบ้าน (แนบไฟล์/รูป)</span>
                 </a>
@@ -190,15 +195,27 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: Units & Modules -->
+            <!-- SECTION 2: Units & Modules (with Delete & View File) -->
             <section id="sec-modules" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
                     <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-book-open text-indigo-600 mr-2"></i>หน่วยการเรียนรู้และสื่อการสอน</h2>
-                    <p class="text-xs text-slate-500 mt-1">วิดีโอ ใบงานออนไลน์ และเอกสารประกอบการเรียน</p>
+                    <p class="text-xs text-slate-500 mt-1">วิดีโอ ใบงานออนไลน์ และเอกสารประกอบการเรียน (แสดงเฉพาะห้องเรียนของคุณ)</p>
                 </div>
 
                 <div id="modules-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Modules List -->
+                </div>
+            </section>
+
+            <!-- SECTION: Student Assignment List (New) -->
+            <section id="sec-assignment-list" class="space-y-6 hidden">
+                <div class="border-b border-slate-200 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-tasks text-indigo-600 mr-2"></i>รายการการบ้านของฉัน</h2>
+                    <p class="text-xs text-slate-500 mt-1">รายการการบ้านที่ได้รับมอบหมายแยกตามห้องเรียน</p>
+                </div>
+
+                <div id="assignment-cards-container" class="space-y-3">
+                    <!-- Assignment Items -->
                 </div>
             </section>
 
@@ -242,7 +259,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 4: Gradebook with Export to Excel & Print/PDF -->
+            <!-- SECTION 4: Gradebook -->
             <section id="sec-grades" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
@@ -255,12 +272,10 @@
                             <!-- Rooms -->
                         </select>
                         
-                        <!-- Export CSV / Excel Button -->
                         <button onclick="exportToCSV()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow flex items-center">
                             <i class="fa-solid fa-file-excel mr-1.5"></i> ดาวน์โหลด CSV / Excel
                         </button>
                         
-                        <!-- Print / PDF Button -->
                         <button onclick="printGradebook()" class="px-3 py-2 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow flex items-center">
                             <i class="fa-solid fa-print mr-1.5"></i> พิมพ์ / โหลด PDF
                         </button>
@@ -359,7 +374,8 @@
         ];
 
         let modules = [
-            { id: 1, title: "Unit 1: Present Perfect Tense", desc: "เรียนรู้ผ่านวิดีโอและโหลดชีท PDF สรุปบทเรียน", linkUrl: "https://www.youtube.com", fileName: "Sheet_Present_Perfect.pdf", targetRoom: "ALL" }
+            { id: 1, title: "Unit 1: Present Perfect Tense", desc: "เรียนรู้ผ่านวิดีโอและโหลดชีท PDF สรุปบทเรียน", linkUrl: "https://www.youtube.com", fileName: "Sheet_Present_Perfect.pdf", fileUrl: "#", targetRoom: "ม.2/1" },
+            { id: 2, title: "Unit 2: Past Simple vs Present Perfect", desc: "ทบทวนการใช้โครงสร้างไวยากรณ์ผ่านแบบฝึกหัด", linkUrl: "https://www.liveworksheets.com", fileName: "Grammar_Exercise.pdf", fileUrl: "#", targetRoom: "ม.2/2" }
         ];
 
         let assignments = [
@@ -429,12 +445,13 @@
             }
 
             renderModules();
+            renderAssignmentList();
             renderAssignmentDropdown();
             renderGradebook();
         }
 
         function showSection(secId) {
-            ['classrooms', 'modules', 'submit', 'grades', 'add-module', 'add-assignment'].forEach(id => {
+            ['classrooms', 'modules', 'assignment-list', 'submit', 'grades', 'add-module', 'add-assignment'].forEach(id => {
                 const el = document.getElementById('sec-' + id);
                 if(el) el.classList.add('hidden');
             });
@@ -493,7 +510,6 @@
             const panel = document.getElementById('room-detail-panel');
             document.getElementById('panel-room-title').innerText = `รายละเอียดห้องเรียน - ${roomName}`;
 
-            // List HW
             const roomHW = assignments.filter(a => a.targetRoom === roomName || a.targetRoom === 'ALL');
             const hwList = document.getElementById('panel-hw-list');
             hwList.innerHTML = roomHW.length > 0 
@@ -506,7 +522,6 @@
             panel.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Render Room Student List with Delete Individual Button
         function renderRoomStudentsTable(roomName) {
             const roomStds = students.filter(s => s.room === roomName);
             const stdTable = document.getElementById('panel-student-table');
@@ -527,7 +542,6 @@
                 : `<tr><td colspan="5" class="p-4 text-center text-slate-400">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>`;
         }
 
-        // Delete Individual Student Function
         function deleteStudent(studentId) {
             const std = students.find(s => s.id === studentId);
             if(std && confirm(`คุณครูต้องการลบ "${std.name}" (รหัส ${std.id}) ออกจากระบบใช่หรือไม่?`)) {
@@ -566,24 +580,58 @@
             renderGradebook();
         }
 
+        // 1. Render Modules with Delete & Open File
         function renderModules() {
             const container = document.getElementById('modules-container');
+            // Filter strictly per student room or teacher
             const visibleModules = modules.filter(m => m.targetRoom === 'ALL' || (currentUser && m.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
 
             if(visibleModules.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400">ยังไม่มีหน่วยการเรียนรู้สำหรับห้องนี้</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 col-span-2">ยังไม่มีหน่วยการเรียนรู้สำหรับห้องนี้</p>`;
                 return;
             }
 
             container.innerHTML = visibleModules.map(m => `
-                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-3 relative group">
+                    ${currentUser && currentUser.isTeacher ? `<button onclick="deleteModule(${m.id})" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 text-xs p-1" title="ลบหน่วยการเรียนรู้นี้"><i class="fa-solid fa-trash"></i></button>` : ''}
                     <span class="px-2.5 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full">${m.targetRoom === 'ALL' ? 'ทุกห้องเรียน' : m.targetRoom}</span>
-                    <h3 class="font-bold text-slate-800 text-sm">${m.title}</h3>
+                    <h3 class="font-bold text-slate-800 text-sm pr-6">${m.title}</h3>
                     <p class="text-xs text-slate-500">${m.desc}</p>
                     <div class="pt-2 flex flex-wrap gap-2 border-t border-slate-200">
                         ${m.linkUrl ? `<a href="${m.linkUrl}" target="_blank" class="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-bold flex items-center"><i class="fa-brands fa-youtube mr-1"></i> เปิดสื่อภายนอก</a>` : ''}
-                        ${m.fileName ? `<span class="px-3 py-1.5 bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center"><i class="fa-solid fa-file-pdf mr-1 text-red-500"></i> ${m.fileName}</span>` : ''}
+                        ${m.fileName ? `<a href="${m.fileUrl || '#'}" target="_blank" onclick="if('${m.fileUrl}'==='#') alert('ดาวน์โหลด/เปิดดูไฟล์: ${m.fileName}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center"><i class="fa-solid fa-file-pdf mr-1"></i> เปิดดูไฟล์: ${m.fileName}</a>` : ''}
                     </div>
+                </div>
+            `).join('');
+        }
+
+        // Delete Module Option (For Teacher)
+        function deleteModule(modId) {
+            if(confirm('คุณครูต้องการลบหน่วยการเรียนรู้นี้ใช่หรือไม่?')) {
+                modules = modules.filter(m => m.id !== modId);
+                renderModules();
+            }
+        }
+
+        // 5. Render Separate Student Assignment List
+        function renderAssignmentList() {
+            const container = document.getElementById('assignment-cards-container');
+            const visibleAssignments = assignments.filter(a => a.targetRoom === 'ALL' || (currentUser && a.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
+
+            if(visibleAssignments.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400">ยังไม่มีการบ้านที่สั่งในห้องเรียนนี้</p>`;
+                return;
+            }
+
+            container.innerHTML = visibleAssignments.map(a => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+                    <div>
+                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded-full">${a.targetRoom}</span>
+                        <h4 class="font-bold text-slate-800 text-xs mt-1">${a.title}</h4>
+                    </div>
+                    <button onclick="showSection('submit')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow">
+                        <i class="fa-solid fa-paper-plane mr-1"></i> ส่งงานนี้
+                    </button>
                 </div>
             `).join('');
         }
@@ -628,9 +676,16 @@
             const linkUrl = document.getElementById('mod-link-url').value;
             const fileInput = document.getElementById('mod-doc-file');
             const targetRoom = document.getElementById('mod-target-room').value;
-            const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : '';
+            
+            let fileName = '';
+            let fileUrl = '#';
 
-            modules.push({ id: Date.now(), title, desc, linkUrl, fileName, targetRoom });
+            if(fileInput.files.length > 0) {
+                fileName = fileInput.files[0].name;
+                fileUrl = URL.createObjectURL(fileInput.files[0]);
+            }
+
+            modules.push({ id: Date.now(), title, desc, linkUrl, fileName, fileUrl, targetRoom });
             alert('บันทึกหน่วยการเรียนรู้เรียบร้อยแล้ว!');
             renderModules();
             showSection('modules');
@@ -644,6 +699,7 @@
             assignments.push({ id: Date.now(), title, targetRoom });
             alert(`สร้างการบ้านสำหรับห้อง ${targetRoom} เรียบร้อยแล้ว!`);
             renderAssignmentDropdown();
+            renderAssignmentList();
             renderClassroomCards();
             showSection('classrooms');
         }
@@ -669,7 +725,6 @@
             `).join('');
         }
 
-        // Export Gradebook to Excel / CSV with UTF-8 BOM (Thai Character Safe)
         function exportToCSV() {
             const filterRoom = document.getElementById('gradebook-filter').value;
             const filteredStudents = (filterRoom === 'ALL') ? students : students.filter(s => s.room === filterRoom);
@@ -691,7 +746,6 @@
             document.body.removeChild(link);
         }
 
-        // Print or Save as PDF
         function printGradebook() {
             window.print();
         }
