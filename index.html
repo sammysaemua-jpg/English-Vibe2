@@ -30,12 +30,12 @@
 
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">รหัสนักเรียน / รหัสครู</label>
-                    <input type="text" id="login-id" placeholder="กรอกรหัสนักเรียน หรือ TEACHER" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">เลขที่ / รหัสประจำตัวนักเรียน หรือ รหัสครู</label>
+                    <input type="text" id="login-id" placeholder="กรอกเลขที่/รหัส หรือ TEACHER" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล (ตรงตามที่ครูลงทะเบียนไว้)</label>
-                    <input type="text" id="login-name" placeholder="กรอกชื่อ-นามสกุล เช่น สมชาย สายเรียน" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อ - นามสกุล (ต้องตรงกับที่ครูลงทะเบียนไว้)</label>
+                    <input type="text" id="login-name" placeholder="กรอกชื่อ-นามสกุล เช่น ด.ช.สมชาย สายเรียน" required class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">เลือกห้องเรียน</label>
@@ -46,7 +46,7 @@
 
                 <!-- Error Message Box -->
                 <div id="login-error-msg" class="hidden p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium text-center">
-                    <i class="fa-solid fa-circle-exclamation mr-1"></i> ไม่พบข้อมูลนักเรียน หรือ รหัสนักเรียน/ชื่อ-นามสกุล ไม่ตรงกับในห้องนี้
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> ไม่พบข้อมูลนักเรียน หรือ เลขที่/รหัส ไม่ตรงกับชื่อ-นามสกุลในห้องนี้
                 </div>
 
                 <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-indigo-200 transition-all">
@@ -154,8 +154,8 @@
                             </select>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-xs font-bold text-slate-700 mb-1">วางรายชื่อ (รูปแบบ: รหัสนักเรียน ชื่อ-นามสกุล คนละ 1 บรรทัด)</label>
-                            <textarea id="import-text-area" rows="4" placeholder="1001 ด.ช.สมชาย สายเรียน&#10;1002 ด.ญ.สมหญิง จริงใจ&#10;1003 ด.ช.กิตติศักดิ์ เรียนดี" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 font-mono outline-none bg-white"></textarea>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">วางรายชื่อ (รูปแบบ: เลขที่ ชื่อ-นามสกุล คนละ 1 บรรทัด)</label>
+                            <textarea id="import-text-area" rows="4" placeholder="1 ด.ช.สมชาย สายเรียน&#10;2 ด.ญ.สมหญิง จริงใจ&#10;3 ด.ช.กิตติศักดิ์ เรียนดี" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 font-mono outline-none bg-white"></textarea>
                         </div>
                     </div>
                     <button onclick="handleBatchImport()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow">
@@ -185,7 +185,7 @@
                             <table class="w-full text-left text-xs">
                                 <thead>
                                     <tr class="bg-indigo-100/50 text-indigo-900 border-b border-indigo-100">
-                                        <th class="p-2.5">รหัสนักเรียน</th>
+                                        <th class="p-2.5">เลขที่ / รหัส</th>
                                         <th class="p-2.5">ชื่อ - นามสกุล</th>
                                         <th class="p-2.5">สถานะการส่งงาน</th>
                                         <th class="p-2.5">คะแนนรวม</th>
@@ -313,7 +313,7 @@
                     <table class="w-full text-left text-xs border-collapse">
                         <thead>
                             <tr class="bg-slate-100 border-b border-slate-200 text-slate-600">
-                                <th class="p-3">รหัสนักเรียน</th>
+                                <th class="p-3">เลขที่ / รหัส</th>
                                 <th class="p-3">ชื่อ - นามสกุล</th>
                                 <th class="p-3">ห้องเรียน</th>
                                 <th class="p-3">งานที่ส่งแล้ว</th>
@@ -398,11 +398,11 @@
         let rooms = ["ม.3/1", "ม.3/2", "ม.3/3"];
         let currentUser = null;
 
-        // Validated registered students database (Using Student ID + Name + Room)
+        // Validated registered students database
         let students = [
-            { id: "1001", name: "ด.ช.สมชาย สายเรียน", room: "ม.3/1", submittedCount: 1, totalScore: 9 },
-            { id: "1002", name: "ด.ญ.สมหญิง จริงใจ", room: "ม.3/1", submittedCount: 0, totalScore: 0 },
-            { id: "2001", name: "ด.ช.กิตติศักดิ์ เรียนดี", room: "ม.3/2", submittedCount: 1, totalScore: 10 }
+            { id: "1", name: "ด.ช.สมชาย สายเรียน", room: "ม.3/1", submittedCount: 1, totalScore: 9 },
+            { id: "2", name: "ด.ญ.สมหญิง จริงใจ", room: "ม.3/1", submittedCount: 0, totalScore: 0 },
+            { id: "1", name: "ด.ช.กิตติศักดิ์ เรียนดี", room: "ม.3/2", submittedCount: 1, totalScore: 10 }
         ];
 
         let modules = [
@@ -437,44 +437,33 @@
             renderClassroomCards();
         }
 
-        // Helper function to clean text for smart matching (Ignores prefixes and extra spaces)
-        function cleanName(text) {
-            if(!text) return '';
-            return text
-                .replace(/^(ด\.ช\.|ด\.ญ\.|นาย|นางสาว|เด็กชาย|เด็กหญิง)\s*/g, '') // Remove prefixes
-                .replace(/\s+/g, '') // Remove all whitespace
-                .toLowerCase();
-        }
-
-        // SMART MATCH AUTHENTICATION
+        // STRICT AUTHENTICATION: Requires exact match for ID, Name, and Room
         function handleLogin(e) {
             e.preventDefault();
-            const idInput = document.getElementById('login-id').value.trim();
-            const nameInput = document.getElementById('login-name').value.trim();
-            const roomInput = document.getElementById('login-room').value;
+            const id = document.getElementById('login-id').value.trim();
+            const name = document.getElementById('login-name').value.trim();
+            const room = document.getElementById('login-room').value;
             const errorBox = document.getElementById('login-error-msg');
 
             errorBox.classList.add('hidden');
 
             // 1. Teacher Mode Check
-            if(idInput.toUpperCase() === 'TEACHER') {
-                currentUser = { id: 'TEACHER', name: nameInput || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
+            if(id.toUpperCase() === 'TEACHER') {
+                currentUser = { id: 'TEACHER', name: name || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
                 document.getElementById('auth-screen').classList.add('hidden');
                 updateUI();
                 return;
             }
 
-            // 2. Clean inputs for comparison
-            const cleanedInputName = cleanName(nameInput);
-
-            // 3. Smart Search Student Match
+            // 2. Strict Student Match Check against existing database
             const foundStudent = students.find(s => 
-                s.id.toString().trim() === idInput.toString().trim() && 
-                s.room === roomInput && 
-                cleanName(s.name) === cleanedInputName
+                s.id.trim() === id && 
+                s.room === room && 
+                s.name.replace(/\s+/g, '') === name.replace(/\s+/g, '')
             );
 
             if (foundStudent) {
+                // Successful Auth
                 currentUser = { 
                     id: foundStudent.id, 
                     name: foundStudent.name, 
@@ -484,6 +473,7 @@
                 document.getElementById('auth-screen').classList.add('hidden');
                 updateUI();
             } else {
+                // Deny Access on Fake/Mismatched Input
                 errorBox.classList.remove('hidden');
             }
         }
@@ -497,7 +487,7 @@
         function updateUI() {
             if(!currentUser) return;
             document.getElementById('nav-user-name').innerText = currentUser.name;
-            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'ครูผู้สอน' : `นักเรียน ${currentUser.room} (รหัส ${currentUser.id})`;
+            document.getElementById('nav-user-role').innerText = currentUser.isTeacher ? 'ครูผู้สอน' : `นักเรียน ${currentUser.room} (เลขที่/รหัส ${currentUser.id})`;
 
             const teacherTop = document.getElementById('teacher-menu-top');
 
@@ -608,7 +598,7 @@
 
         function deleteStudent(studentId, roomName) {
             const std = students.find(s => s.id === studentId && s.room === roomName);
-            if(std && confirm(`คุณครูต้องการลบ "${std.name}" (รหัส ${std.id}) ออกจากห้อง ${roomName} ใช่หรือไม่?`)) {
+            if(std && confirm(`คุณครูต้องการลบ "${std.name}" (เลขที่/รหัส ${std.id}) ออกจากห้อง ${roomName} ใช่หรือไม่?`)) {
                 students = students.filter(s => !(s.id === studentId && s.room === roomName));
                 if(currentActiveRoom) renderRoomStudentsTable(currentActiveRoom);
                 renderClassroomCards();
@@ -746,6 +736,7 @@
             }
         }
 
+        // STRICT SUBMISSION: Updates ONLY existing registered student entry
         function handleSubmitAssignment(e) {
             e.preventDefault();
             const select = document.getElementById('sub-assignment-select');
@@ -763,6 +754,7 @@
                 btn.innerHTML = '<span>ส่งงานให้ AI ตรวจทันที</span> <i class="fa-solid fa-robot ml-2"></i>';
                 document.getElementById('ai-feedback-box').classList.remove('hidden');
 
+                // Find existing student strictly
                 if(currentUser && !currentUser.isTeacher) {
                     const std = students.find(s => s.id === currentUser.id && s.room === currentUser.room);
                     if(std) {
@@ -837,7 +829,7 @@
             const filteredStudents = (filterRoom === 'ALL') ? students : students.filter(s => s.room === filterRoom);
 
             let csv = "\uFEFF";
-            csv += "รหัสนักเรียน,ชื่อ-นามสกุล,ห้องเรียน,งานที่ส่งแล้ว(ชิ้น),คะแนนรวม\n";
+            csv += "เลขที่/รหัสประจำตัว,ชื่อ-นามสกุล,ห้องเรียน,งานที่ส่งแล้ว(ชิ้น),คะแนนรวม\n";
 
             filteredStudents.forEach(s => {
                 csv += `"${s.id}","${s.name}","${s.room}","${s.submittedCount}","${s.totalScore}"\n`;
