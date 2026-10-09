@@ -91,7 +91,7 @@
                         <i class="fa-solid fa-folder-plus w-5"></i> <span>+ เพิ่มหน่วยการเรียนรู้</span>
                     </a>
                     <a href="#" onclick="showSection('add-assignment')" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100">
-                        <i class="fa-solid fa-file-circle-plus w-5"></i> <span>+ สร้างการบ้าน (เลือกห้อง)</span>
+                        <i class="fa-solid fa-file-circle-plus w-5"></i> <span>+ มอบหมายงาน (เลือกห้อง)</span>
                     </a>
                 </div>
 
@@ -101,11 +101,11 @@
                 
                 <!-- Student Assignment List Menu -->
                 <a href="#" onclick="showSection('assignment-list')" id="nav-assignment-list" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-tasks w-5 text-indigo-600"></i> <span>รายการการบ้านของฉัน</span>
+                    <i class="fa-solid fa-tasks w-5 text-indigo-600"></i> <span>รายการงานของฉัน</span>
                 </a>
 
                 <a href="#" onclick="showSection('submit')" id="nav-submit" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-paper-plane w-5 text-indigo-600"></i> <span>ส่งการบ้าน (แนบไฟล์/รูป)</span>
+                    <i class="fa-solid fa-paper-plane w-5 text-indigo-600"></i> <span>ส่งงาน (แนบไฟล์/รูป)</span>
                 </a>
                 <a href="#" onclick="showSection('grades')" id="nav-grades" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-100">
                     <i class="fa-solid fa-square-poll-vertical w-5 text-indigo-600"></i> <span>สมุดคะแนน</span>
@@ -121,7 +121,7 @@
                 <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-chalkboard-user text-indigo-600 mr-2"></i>จัดการห้องเรียน & คลิกดูงานนักเรียน</h2>
-                        <p class="text-xs text-slate-500 mt-1">คลิกที่การ์ดไอคอนห้องเรียนเพื่อดูการบ้านและตรวจการส่งงานของนักเรียนในห้องนั้น</p>
+                        <p class="text-xs text-slate-500 mt-1">คลิกที่การ์ดไอคอนห้องเรียนเพื่อดูรายการงานและตรวจการส่งงานของนักเรียนในห้องนั้น</p>
                     </div>
                     
                     <div class="flex items-center space-x-2">
@@ -166,7 +166,7 @@
 
                     <!-- Room Homework List -->
                     <div>
-                        <h4 class="font-bold text-xs text-slate-700 mb-2"><i class="fa-solid fa-tasks text-indigo-600 mr-1"></i>การบ้านที่สั่งไว้ในห้องนี้:</h4>
+                        <h4 class="font-bold text-xs text-slate-700 mb-2"><i class="fa-solid fa-tasks text-indigo-600 mr-1"></i>รายการงานที่สั่งไว้ในห้องนี้:</h4>
                         <div id="panel-hw-list" class="space-y-1 text-xs">
                             <!-- HW items -->
                         </div>
@@ -225,8 +225,8 @@
             <!-- SECTION: Student Assignment List -->
             <section id="sec-assignment-list" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-tasks text-indigo-600 mr-2"></i>รายการการบ้านของฉัน</h2>
-                    <p class="text-xs text-slate-500 mt-1">รายการการบ้านที่ได้รับมอบหมายแยกตามห้องเรียน</p>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-tasks text-indigo-600 mr-2"></i>รายการงานของฉัน</h2>
+                    <p class="text-xs text-slate-500 mt-1">รายการงานที่ได้รับมอบหมายแยกตามห้องเรียน</p>
                 </div>
 
                 <div id="assignment-cards-container" class="space-y-3">
@@ -234,19 +234,25 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: Submit Assignment -->
+            <!-- SECTION 3: Submit Assignment (With Off-system Assignment Input) -->
             <section id="sec-submit" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งการบ้านออนไลน์ (ถ่ายภาพ/แนบไฟล์)</h2>
-                    <p class="text-xs text-slate-500 mt-1">อัปโหลดรูปถ่ายสมุด/ใบงาน หรือไฟล์เอกสาร เพื่อส่งงานให้ AI ช่วยตรวจ</p>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i>ส่งงานออนไลน์ (ถ่ายภาพ/แนบไฟล์)</h2>
+                    <p class="text-xs text-slate-500 mt-1">อัปโหลดรูปถ่ายสมุด/ใบงาน หรือไฟล์เอกสาร เพื่อส่งงานให้ครูตรวจ</p>
                 </div>
 
                 <form onsubmit="handleSubmitAssignment(event)" class="space-y-4 max-w-xl">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">เลือกการบ้านที่จะส่ง</label>
-                        <select id="sub-assignment-select" class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">เลือกงานที่จะส่ง</label>
+                        <select id="sub-assignment-select" onchange="toggleCustomTitleInput()" class="w-full text-sm p-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-indigo-500" required>
                             <!-- Filtered per student room -->
                         </select>
+                    </div>
+
+                    <!-- Custom Title Input for Off-System Assignments -->
+                    <div id="custom-title-box" class="hidden">
+                        <label class="block text-xs font-bold text-indigo-700 mb-1"><i class="fa-solid fa-pen-to-square mr-1"></i>พิมพ์หัวข้องาน / ชื่องานที่สั่งในห้องเรียน</label>
+                        <input type="text" id="sub-custom-title" placeholder="เช่น งานในสมุด หน้า 15 หรือ สรุปคำศัพท์ Unit 3" class="w-full text-sm p-3 rounded-xl border border-indigo-300 outline-none focus:ring-2 focus:ring-indigo-500 bg-indigo-50/30">
                     </div>
 
                     <div class="p-6 bg-slate-50 rounded-2xl border-2 border-dashed border-indigo-200 text-center space-y-3">
@@ -358,22 +364,22 @@
             <!-- SECTION 6: Teacher - Add Assignment Form -->
             <section id="sec-add-assignment" class="space-y-6 hidden">
                 <div class="border-b border-slate-200 pb-4">
-                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-file-circle-plus text-emerald-600 mr-2"></i>สร้างการบ้านใหม่ (ระบุห้องเรียน)</h2>
+                    <h2 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-file-circle-plus text-emerald-600 mr-2"></i>มอบหมายงานใหม่ (ระบุห้องเรียน)</h2>
                 </div>
 
                 <form onsubmit="handleCreateAssignment(event)" class="space-y-4 max-w-xl bg-slate-50 p-5 rounded-2xl border border-slate-200">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหัวข้อการบ้าน / งานที่สั่ง</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">ชื่อหัวข้องานที่มอบหมาย</label>
                         <input type="text" id="asg-title" placeholder="เช่น HW 1: แบบฝึกหัดในสมุด หน้า 25" required class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">สั่งการบ้านให้ห้องเรียนไหน</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">มอบหมายงานให้ห้องเรียนไหน</label>
                         <select id="asg-target-room" class="w-full text-xs p-2.5 rounded-xl border border-slate-300 outline-none bg-white">
                             <!-- Rooms -->
                         </select>
                     </div>
                     <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs shadow">
-                        บันทึกการสร้างการบ้าน
+                        บันทึกการมอบหมายงาน
                     </button>
                 </form>
             </section>
@@ -386,7 +392,6 @@
         let rooms = ["ม.3/1", "ม.3/2", "ม.3/3"];
         let currentUser = null;
 
-        // Sample initial student data with independent IDs per room
         let students = [
             { id: "1", name: "ด.ช. สมชาย สายเรียน", room: "ม.3/1", submittedCount: 1, totalScore: 9 },
             { id: "2", name: "ด.ญ. สมหญิง จริงใจ", room: "ม.3/1", submittedCount: 0, totalScore: 0 },
@@ -435,7 +440,6 @@
                 currentUser = { id: 'TEACHER', name: name || 'คุณครูผู้สอน', room: 'ครูผู้สอน', isTeacher: true };
             } else {
                 currentUser = { id, name, room, isTeacher: false };
-                // Check uniqueness based on BOTH ID and ROOM
                 if(!students.find(s => s.id === id && s.room === room)) {
                     students.push({ id, name, room, submittedCount: 0, totalScore: 0 });
                 }
@@ -495,7 +499,7 @@
                             <div>
                                 <h3 class="font-bold text-slate-800 text-base">${r}</h3>
                                 <p class="text-xs text-slate-500 mt-0.5">นักเรียนในห้อง: <span class="font-bold text-indigo-600">${count}</span> คน</p>
-                                <p class="text-xs text-slate-500">การบ้านที่สั่งไว้: <span class="font-bold text-emerald-600">${hwCount}</span> งาน</p>
+                                <p class="text-xs text-slate-500">งานที่สั่งไว้: <span class="font-bold text-emerald-600">${hwCount}</span> งาน</p>
                             </div>
                             <div class="pt-2 border-t border-slate-100 flex items-center text-xs font-bold text-indigo-600">
                                 <span>คลิกเพื่อเปิดดูรายละเอียด</span> <i class="fa-solid fa-arrow-right ml-1"></i>
@@ -534,7 +538,7 @@
             const hwList = document.getElementById('panel-hw-list');
             hwList.innerHTML = roomHW.length > 0 
                 ? roomHW.map(a => `<p class="p-2 bg-white rounded-lg border border-indigo-100 font-medium"><i class="fa-solid fa-check text-emerald-500 mr-1.5"></i> ${a.title}</p>`).join('')
-                : `<p class="text-slate-400">ยังไม่มีการบ้านที่สั่งในห้องนี้</p>`;
+                : `<p class="text-slate-400">ยังไม่มีงานที่สั่งในห้องนี้</p>`;
 
             renderRoomStudentsTable(roomName);
 
@@ -562,7 +566,6 @@
                 : `<tr><td colspan="5" class="p-4 text-center text-slate-400">ยังไม่มีรายชื่อนักเรียนในห้องนี้</td></tr>`;
         }
 
-        // Delete student with composite key (id + room)
         function deleteStudent(studentId, roomName) {
             const std = students.find(s => s.id === studentId && s.room === roomName);
             if(std && confirm(`คุณครูต้องการลบ "${std.name}" (เลขที่/รหัส ${std.id}) ออกจากห้อง ${roomName} ใช่หรือไม่?`)) {
@@ -577,7 +580,6 @@
             document.getElementById('room-detail-panel').classList.add('hidden');
         }
 
-        // Batch Import allowing duplicate IDs across DIFFERENT rooms
         function handleBatchImport() {
             const targetRoom = document.getElementById('import-room-select').value;
             const text = document.getElementById('import-text-area').value.trim();
@@ -589,7 +591,6 @@
                 if(parts.length >= 2) {
                     const id = parts[0];
                     const name = parts.slice(1).join(' ');
-                    // Check duplicate ONLY within the SAME target room
                     if(!students.find(s => s.id === id && s.room === targetRoom)) {
                         students.push({ id, name, room: targetRoom, submittedCount: 0, totalScore: 0 });
                         addedCount++;
@@ -663,7 +664,7 @@
             const visibleAssignments = assignments.filter(a => a.targetRoom === 'ALL' || (currentUser && a.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
 
             if(visibleAssignments.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400">ยังไม่มีการบ้านที่สั่งในห้องเรียนนี้</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400">ยังไม่มีงานที่มอบหมายในห้องเรียนนี้</p>`;
                 return;
             }
 
@@ -684,16 +685,37 @@
             const select = document.getElementById('sub-assignment-select');
             const visibleAssignments = assignments.filter(a => a.targetRoom === 'ALL' || (currentUser && a.targetRoom === currentUser.room) || (currentUser && currentUser.isTeacher));
 
-            if(visibleAssignments.length === 0) {
-                select.innerHTML = `<option value="">ไม่มีการบ้านในห้องนี้</option>`;
-                return;
-            }
+            let optionsHtml = visibleAssignments.map(a => `<option value="${a.id}">${a.title} (${a.targetRoom})</option>`).join('');
+            optionsHtml += `<option value="CUSTOM">+ ส่งงานอื่นๆ (งานที่สั่งในห้องเรียน)</option>`;
 
-            select.innerHTML = visibleAssignments.map(a => `<option value="${a.id}">${a.title} (${a.targetRoom})</option>`).join('');
+            select.innerHTML = optionsHtml;
+            toggleCustomTitleInput();
+        }
+
+        function toggleCustomTitleInput() {
+            const select = document.getElementById('sub-assignment-select');
+            const customBox = document.getElementById('custom-title-box');
+            const customInput = document.getElementById('sub-custom-title');
+
+            if (select.value === 'CUSTOM') {
+                customBox.classList.remove('hidden');
+                customInput.setAttribute('required', 'true');
+            } else {
+                customBox.classList.add('hidden');
+                customInput.removeAttribute('required');
+            }
         }
 
         function handleSubmitAssignment(e) {
             e.preventDefault();
+            const select = document.getElementById('sub-assignment-select');
+            const customInput = document.getElementById('sub-custom-title');
+            
+            if (select.value === 'CUSTOM' && !customInput.value.trim()) {
+                alert('กรุณากรอกหัวข้องานที่สั่งในห้องเรียนด้วยครับ');
+                return;
+            }
+
             const btn = document.getElementById('btn-submit-work');
             btn.innerHTML = '<span>กำลังส่งไฟล์และให้ AI ตรวจ...</span> <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
 
@@ -742,7 +764,7 @@
             const targetRoom = document.getElementById('asg-target-room').value;
 
             assignments.push({ id: Date.now(), title, targetRoom });
-            alert(`สร้างการบ้านสำหรับห้อง ${targetRoom} เรียบร้อยแล้ว!`);
+            alert(`สร้างการมอบหมายงานสำหรับห้อง ${targetRoom} เรียบร้อยแล้ว!`);
             renderAssignmentDropdown();
             renderAssignmentList();
             renderClassroomCards();
